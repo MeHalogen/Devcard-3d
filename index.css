@@ -1011,6 +1011,22 @@ body.light-mode .preview-badge {
     box-shadow: 0 0 8px rgba(0, 242, 150, 0.2);
 }
 
+.card-username-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    transition: opacity 0.2s ease;
+}
+
+.card-username-link:hover {
+    opacity: 0.85;
+}
+
+.card-username-link:hover .card-username {
+    text-decoration: underline;
+    color: var(--accent);
+}
+
 .card-username {
     font-family: var(--font-heading);
     font-size: 1.1rem;
@@ -1830,6 +1846,19 @@ body.light-mode .leaderboard-row:hover {
 .lb-info {
     flex: 1;
     min-width: 0;
+}
+
+.lb-profile-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.lb-profile-link:hover .lb-name {
+    color: var(--accent);
+    text-decoration: underline;
 }
 
 .lb-name {

@@ -444,6 +444,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         dom.cardRarityTitle.textContent  = state.rarity;
         dom.cardDisplayName.textContent  = state.username;
+        const nameLink = document.getElementById('card-display-name-link');
+        if (nameLink) {
+            nameLink.href = `https://github.com/${state.username}`;
+        }
         dom.cardDisplayLevel.textContent = state.lvl;
         dom.cardDisplayAvatar.src        = state.avatarUrl;
         dom.cardDisplayAvatar.alt        = `${state.name}'s avatar`;
@@ -776,7 +780,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             console.error(err);
             showToast(err.message, true);
-            simulateOfflineStats(username);
+            if (!err.message.includes('not found')) {
+                simulateOfflineStats(username);
+            }
         } finally {
             dom.btnFetch.classList.remove('loading');
             dom.btnFetch.disabled = false;
@@ -1079,8 +1085,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="lb-rank" aria-label="Rank ${rank}">${rankEmoji}</span>
                     <img class="lb-avatar" src="${avatar}" alt="${name}" loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/identicon/svg?seed=${dev.username}'">
                     <div class="lb-info">
-                        <div class="lb-name">${name}${dev.isCurrentUser ? ' <em style="font-size:0.7rem;font-weight:400;opacity:0.6">(You)</em>' : ''}</div>
-                        <div class="lb-sub">${sub}</div>
+                        <a href="https://github.com/${dev.username}" target="_blank" rel="noopener noreferrer" class="lb-profile-link">
+                            <div class="lb-name">${name}${dev.isCurrentUser ? ' <em style="font-size:0.7rem;font-weight:400;opacity:0.6">(You)</em>' : ''}</div>
+                            <div class="lb-sub">${sub}</div>
+                        </a>
                     </div>
                     <div class="lb-score-block">
                         <span class="lb-score">${score}</span>
