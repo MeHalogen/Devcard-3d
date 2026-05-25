@@ -10,8 +10,8 @@
    Get them free at https://supabase.com — the free tier is more than enough.
    If left as empty strings, the app runs in full LOCAL SIMULATION MODE.
    -------------------------------------------------------------------------- */
-const SUPABASE_URL = '';
-const SUPABASE_ANON_KEY = '';
+const SUPABASE_URL = window.SUPABASE_CONFIG?.url || '';
+const SUPABASE_ANON_KEY = window.SUPABASE_CONFIG?.anonKey || '';
 const LEADERBOARD_TABLE = 'devcard_leaderboard';
 
 /* --------------------------------------------------------------------------
