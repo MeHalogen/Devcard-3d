@@ -63,14 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         java: { emoji: '🏔️', name: 'Earth',   color: '#b07219', title: 'Enterprise Golem' },
     };
 
-    // ---- Local leaderboard benchmarks (always present) ----
-    const BENCHMARK_DEVS = [
-        { username: 'torvalds',  name: 'Linus Torvalds',  avatarUrl: 'https://avatars.githubusercontent.com/u/1024?v=4',    atk: 83,  def: 190500, hp: 18450, lvl: 18 },
-        { username: 'yyx990803', name: 'Evan You',        avatarUrl: 'https://avatars.githubusercontent.com/u/499550?v=4',  atk: 52,  def: 53000,  hp: 8800,  lvl: 14 },
-        { username: 'gaearon',   name: 'Dan Abramov',     avatarUrl: 'https://avatars.githubusercontent.com/u/810438?v=4',  atk: 78,  def: 32000,  hp: 10200, lvl: 13 },
-        { username: 'sindresorhus', name: 'Sindre Sorhus', avatarUrl: 'https://avatars.githubusercontent.com/u/170270?v=4', atk: 1000, def: 16500, hp: 22000, lvl: 16 },
-        { username: 'tj',        name: 'TJ Holowaychuk',  avatarUrl: 'https://avatars.githubusercontent.com/u/25254?v=4',   atk: 300, def: 20000,  hp: 15000, lvl: 16 },
-    ];
+
 
     // ---- DOM References ----
     const dom = {
@@ -879,9 +872,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const localEntries = loadLocalLeaderboardEntries();
         const dbEntries    = await fetchLeaderboardFromSupabase();
 
-        // Merge: prefer DB entries, fall back to local, then benchmarks
+        // Merge: prefer DB entries, fall back to local
         const merged = {};
-        BENCHMARK_DEVS.forEach(d  => { merged[d.username] = { ...d, score: calcScore(d), verified: true, isBenchmark: true }; });
         localEntries.forEach(e  => { merged[e.username] = { ...e, score: calcScore(e) }; });
         dbEntries.forEach(e     => { merged[e.username] = { ...e, score: calcScore(e) }; });
 
