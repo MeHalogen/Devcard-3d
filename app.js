@@ -733,7 +733,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!userResp.ok) {
                 const status = userResp.status;
                 if (status === 403) throw new Error('API rate limited — please try again shortly.');
-                if (status === 404) throw new Error(`GitHub user "@${username}" not found.`);
+                if (status === 404) {
+                    const err = new Error(`GitHub user "@${username}" not found.`);
+                    err.isNotFound = true;
+                    throw err;
+                }
                 throw new Error('Failed to fetch GitHub profile.');
             }
             const userData = await userResp.json();
@@ -780,7 +784,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             console.error(err);
             showToast(err.message, true);
-            if (!err.message.includes('not found')) {
+            if (!err.isNotFound) {
                 simulateOfflineStats(username);
             }
         } finally {
