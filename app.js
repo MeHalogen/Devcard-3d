@@ -395,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `<iframe src="${base}/?${params}" width="360" height="520" style="border:none;border-radius:18px;overflow:hidden;" scrolling="no" loading="lazy"></iframe>`;
 
         dom.readmeCode.textContent =
-            `[![My DevCard](${base}/api/badge?user=${state.username}&theme=${state.theme})](${base})`;
+            `[![My DevCard](YOUR_UPLOADED_IMAGE_URL)](${base}/?user=${state.username}&theme=${state.theme})`;
     }
 
     /* ========================================================================
