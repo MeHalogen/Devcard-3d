@@ -1083,7 +1083,7 @@ body.light-mode .preview-badge {
 .card-verified-badge {
     position: absolute;
     top: 8px;
-    right: 52px;
+    left: 8px;
     display: flex;
     align-items: center;
     gap: 0.3rem;
