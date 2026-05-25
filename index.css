@@ -1817,6 +1817,29 @@ body.light-mode .leaderboard-row:hover {
     background: rgba(0, 242, 150, 0.04);
 }
 
+.leaderboard-divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.25rem 0;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    opacity: 0.5;
+}
+
+.leaderboard-row.is-pinned {
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    background: rgba(0, 242, 254, 0.04) !important;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.08);
+}
+
+body.light-mode .leaderboard-row.is-pinned {
+    border-color: rgba(2, 132, 199, 0.25);
+    background: rgba(2, 132, 199, 0.04) !important;
+    box-shadow: 0 0 15px rgba(2, 132, 199, 0.08);
+}
+
 .leaderboard-row.rank-1 { border-color: rgba(255, 215, 0, 0.35); }
 .leaderboard-row.rank-2 { border-color: rgba(192, 192, 192, 0.35); }
 .leaderboard-row.rank-3 { border-color: rgba(205, 127, 50, 0.35); }

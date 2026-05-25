@@ -1073,13 +1073,61 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        container.innerHTML = ranked.map((dev, i) => {
+        // Check if the current user is in the top 20
+        const isUserInTop20 = ranked.slice(0, 20).some(dev => dev.username === state.username);
+        
+        let displayList = ranked.slice(0, 20);
+        
+        // If user is logged in and verified, but not in top 20
+        let pinnedRowHtml = '';
+        if (state.isVerified && state.username && !isUserInTop20) {
+            const userIndex = ranked.findIndex(dev => dev.username === state.username);
+            const userRank = userIndex !== -1 ? userIndex + 1 : '?';
+            const userDev = userIndex !== -1 ? ranked[userIndex] : {
+                username:   state.username,
+                name:       state.name,
+                avatar_url: state.avatarUrl,
+                score:      calcScore(state),
+                lvl:        state.lvl,
+                verified:   true,
+            };
+
+            const avatar = userDev.avatar_url || userDev.avatarUrl || `https://api.dicebear.com/7.x/identicon/svg?seed=${userDev.username}`;
+            const name = userDev.name || userDev.username;
+            const score = userDev.score.toLocaleString();
+            const sub = `@${userDev.username} · LVL ${userDev.lvl || '?'}`;
+            const verifiedDot = userDev.verified ? '<span class="lb-verified-dot" title="Verified via GitHub" aria-label="Verified"></span>' : '';
+
+            pinnedRowHtml = `
+                <div class="leaderboard-divider" aria-hidden="true">
+                    <span>•••</span>
+                </div>
+                <div class="leaderboard-row is-current-user is-pinned" role="listitem">
+                    <span class="lb-rank" aria-label="Rank ${userRank}">#${userRank}</span>
+                    <img class="lb-avatar" src="${avatar}" alt="${name}" loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/identicon/svg?seed=${userDev.username}'">
+                    <div class="lb-info">
+                        <a href="https://github.com/${userDev.username}" target="_blank" rel="noopener noreferrer" class="lb-profile-link">
+                            <div class="lb-name">${name} <em style="font-size:0.7rem;font-weight:400;opacity:0.6">(You)</em></div>
+                            <div class="lb-sub">${sub}</div>
+                        </a>
+                    </div>
+                    <div class="lb-score-block">
+                        <span class="lb-score">${score}</span>
+                        <span class="lb-score-label">DEV SCORE</span>
+                    </div>
+                    ${verifiedDot}
+                </div>
+            `;
+        }
+
+        // Render the list
+        let listHtml = displayList.map((dev, i) => {
             const rank      = i + 1;
             const rankClass = rank <= 3 ? `rank-${rank}` : '';
             const rankEmoji = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
             const avatar    = dev.avatar_url || dev.avatarUrl || `https://api.dicebear.com/7.x/identicon/svg?seed=${dev.username}`;
             const name      = dev.name || dev.username;
-            const isCurrent = dev.isCurrentUser ? 'is-current-user' : '';
+            const isCurrent = dev.username === state.username ? 'is-current-user' : '';
             const score     = dev.score.toLocaleString();
             const sub       = `@${dev.username} · LVL ${dev.lvl || '?'}`;
             const verifiedDot = dev.verified ? '<span class="lb-verified-dot" title="Verified via GitHub" aria-label="Verified"></span>' : '';
@@ -1090,7 +1138,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img class="lb-avatar" src="${avatar}" alt="${name}" loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/identicon/svg?seed=${dev.username}'">
                     <div class="lb-info">
                         <a href="https://github.com/${dev.username}" target="_blank" rel="noopener noreferrer" class="lb-profile-link">
-                            <div class="lb-name">${name}${dev.isCurrentUser ? ' <em style="font-size:0.7rem;font-weight:400;opacity:0.6">(You)</em>' : ''}</div>
+                            <div class="lb-name">${name}${dev.username === state.username ? ' <em style="font-size:0.7rem;font-weight:400;opacity:0.6">(You)</em>' : ''}</div>
                             <div class="lb-sub">${sub}</div>
                         </a>
                     </div>
@@ -1102,6 +1150,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         }).join('');
+
+        container.innerHTML = listHtml + pinnedRowHtml;
     }
 
     /* ========================================================================
