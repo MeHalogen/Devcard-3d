@@ -1369,7 +1369,20 @@ body.light-mode .btn-outline:hover {
     .exporter-tabs-section { padding: 0 1rem; }
 }
 
-.exporter-container {
+.exporter-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 2rem;
+    align-items: stretch;
+}
+
+@media (max-width: 968px) {
+    .exporter-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.exporter-container, .leaderboard-container {
     background: var(--panel-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -1378,6 +1391,11 @@ body.light-mode .btn-outline:hover {
     padding: 2.5rem;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     transition: background 0.4s ease;
+}
+
+.leaderboard-container {
+    display: flex;
+    flex-direction: column;
 }
 
 .tabs-header {
