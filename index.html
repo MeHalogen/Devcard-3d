@@ -273,8 +273,12 @@
                         <!-- Card Top Bar -->
                         <div class="card-header-bar">
                             <div class="dev-meta">
-                                <span class="rarity-title" id="card-rarity-title">Legendary Kernel Mage</span>
+                                <div class="rarity-and-badges">
+                                    <span class="rarity-title" id="card-rarity-title">Legendary Kernel Mage</span>
+                                    <span class="quest-badge" id="card-quest-badge" style="display:none">LFG</span>
+                                </div>
                                 <h3 class="card-username" id="card-display-name">torvalds</h3>
+                                <span class="guild-title" id="card-guild-title">Guild: Freelance Alliance</span>
                             </div>
                             <div class="card-level-badge" aria-label="Card level">
                                 <span class="level-label">LVL</span>
@@ -300,6 +304,12 @@
                             <div class="card-element-icon" id="card-primary-element-badge" aria-label="Primary element">
                                 <span class="element-emoji" aria-hidden="true">⚡</span>
                             </div>
+                        </div>
+
+                        <!-- Passive Ability Block -->
+                        <div class="card-passive-block">
+                            <span class="passive-label">PASSIVE: <span id="card-passive-name">Borrow Checker Guard</span></span>
+                            <p class="passive-desc" id="card-passive-desc">Immune to segmentation faults. Increases card DEF by 20%.</p>
                         </div>
 
                         <!-- Bio Block -->

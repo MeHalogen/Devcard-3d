@@ -982,6 +982,12 @@ body.light-mode .preview-badge {
 
 .dev-meta { display: flex; flex-direction: column; }
 
+.rarity-and-badges {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
 .rarity-title {
     font-size: 0.58rem;
     font-family: var(--font-heading);
@@ -991,12 +997,37 @@ body.light-mode .preview-badge {
     color: #00f2fe;
 }
 
+.quest-badge {
+    background: rgba(0, 242, 150, 0.12);
+    border: 1px solid rgba(0, 242, 150, 0.4);
+    color: #00f296;
+    padding: 0.05rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.45rem;
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 8px rgba(0, 242, 150, 0.2);
+}
+
 .card-username {
     font-family: var(--font-heading);
     font-size: 1.1rem;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: -0.5px;
+    margin-top: 0.05rem;
+}
+
+.guild-title {
+    font-size: 0.48rem;
+    color: var(--text-muted);
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-top: 0.05rem;
 }
 
 .card-level-badge {
@@ -1077,6 +1108,59 @@ body.light-mode .preview-badge {
     font-size: 0.9rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     transition: transform var(--transition-speed) ease;
+}
+
+/* Passive Ability Block */
+.card-passive-block {
+    margin-bottom: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    transition: all 0.3s ease;
+}
+
+body.light-mode .card-passive-block {
+    background: rgba(0, 0, 0, 0.015);
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
+.card-passive-block:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.light-mode .card-passive-block:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.passive-label {
+    font-size: 0.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+}
+
+#card-passive-name {
+    font-size: 0.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    text-transform: none;
+    margin-left: 0.15rem;
+}
+
+.passive-desc {
+    font-size: 0.46rem;
+    line-height: 1.35;
+    color: var(--text-muted);
+    margin: 0;
+    font-style: italic;
+    font-family: var(--font-body);
 }
 
 /* Verification Badge on Card */
@@ -1282,6 +1366,62 @@ body.light-mode .preview-badge {
     letter-spacing: 1.5px;
     margin-bottom: 0.75rem;
     text-transform: uppercase;
+}
+
+}
+
+.back-attributes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 1.2rem;
+    text-align: left;
+}
+
+.attribute-node {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.attribute-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.5rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-heading);
+}
+
+body.light-mode .attribute-meta {
+    color: rgba(15, 23, 42, 0.7);
+}
+
+.attribute-value {
+    color: var(--accent);
+    font-weight: 800;
+}
+
+.attribute-bar-bg {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.light-mode .attribute-bar-bg {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.03);
+}
+
+.attribute-bar-fill {
+    height: 100%;
+    border-radius: 30px;
+    background: linear-gradient(90deg, var(--accent), var(--primary));
+    box-shadow: 0 0 8px var(--accent-glow);
+    transition: width 0.8s ease-out;
 }
 
 .back-stats-list {

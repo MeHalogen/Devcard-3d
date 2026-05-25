@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         atk:           83,
         def:           190500,
         lvl:           18,
-        rarity:        'Legendary Systems Architect',
+        rarity:        'Legendary Systems Chronomancer',
         theme:         'holo-classic',
         primaryLang:   'cpp',
         secondaryLang: 'rs',
@@ -48,6 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
         authUser:      null,    // { login, avatarUrl, name } when authenticated
         isOnLeaderboard: false,
         isLightMode:   false,
+        createdAt:     '2005-10-20T00:00:00Z',
+        company:       'Linux Foundation',
+        hireable:      false,
     };
 
     // ---- Language to Element Map ----
@@ -147,11 +150,42 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span>DEVCARD</span>
                 </div>
                 <div class="card-back-frame">
-                    <h4>DEV STATS OVERVIEW</h4>
+                    <h4>DEV ATTRIBUTES</h4>
+                    <div class="back-attributes">
+                        <!-- INT Meter -->
+                        <div class="attribute-node">
+                            <div class="attribute-meta">
+                                <span>INTELLECT (INT)</span>
+                                <span class="attribute-value" id="back-val-int">50</span>
+                            </div>
+                            <div class="attribute-bar-bg">
+                                <div class="attribute-bar-fill" id="back-bar-int" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <!-- CHA Meter -->
+                        <div class="attribute-node">
+                            <div class="attribute-meta">
+                                <span>CHARISMA (CHA)</span>
+                                <span class="attribute-value" id="back-val-cha">50</span>
+                            </div>
+                            <div class="attribute-bar-bg">
+                                <div class="attribute-bar-fill" id="back-bar-cha" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <!-- AGI Meter -->
+                        <div class="attribute-node">
+                            <div class="attribute-meta">
+                                <span>AGILITY (AGI)</span>
+                                <span class="attribute-value" id="back-val-agi">50</span>
+                            </div>
+                            <div class="attribute-bar-bg">
+                                <div class="attribute-bar-fill" id="back-bar-agi" style="width: 50%"></div>
+                            </div>
+                        </div>
+                    </div>
+
                     <ul class="back-stats-list">
-                        <li><span>RANKING</span><span class="stat-highlight" id="back-stat-rank">GOLD MAGE</span></li>
-                        <li><span>LINEAGE</span><span id="back-stat-lang">C++ / RUST</span></li>
-                        <li><span>CREATION</span><span id="back-stat-created">EST. 2008</span></li>
+                        <li><span>LINEAGE</span><span id="back-stat-created">EST. --</span></li>
                         <li><span>VERIFIED</span><span id="back-stat-verified">NO</span></li>
                     </ul>
                 </div>
@@ -285,14 +319,85 @@ document.addEventListener('DOMContentLoaded', () => {
         return n.toLocaleString();
     };
 
-    const getDevRarity = (followers, repos) => {
+    const getDeveloperClass = (primaryLang) => {
+        const lang = (primaryLang || 'js').toLowerCase();
+        if (lang === 'rs' || lang === 'cpp') return 'Systems Chronomancer';
+        if (lang === 'js' || lang === 'ts' || lang === 'html') return 'Frontend Spellweaver';
+        if (lang === 'go' || lang === 'java' || lang === 'rb') return 'Backend Golem';
+        if (lang === 'py') return 'Data Druid';
+        return 'Compiler Squire';
+    };
+
+    const getPassiveAbility = (primaryLang) => {
+        const lang = (primaryLang || 'js').toLowerCase();
+        switch (lang) {
+            case 'rs':
+                return {
+                    name: 'Borrow Checker Guard',
+                    desc: 'Immune to memory leaks and segmentation faults. Increases card DEF by 20%.'
+                };
+            case 'cpp':
+                return {
+                    name: 'Pointer Redirection',
+                    desc: 'Direct memory bypasses compiler blocks. Attacks deal double crit damage.'
+                };
+            case 'js':
+            case 'ts':
+                return {
+                    name: 'Asynchronous Evocation',
+                    desc: 'Non-blocking runtime loops. Allows executing multiple parallel actions.'
+                };
+            case 'py':
+                return {
+                    name: 'Indentation Druidry',
+                    desc: 'Clean spatial structures grant 15% life regeneration.'
+                };
+            case 'go':
+                return {
+                    name: 'Goroutine Concurrency',
+                    desc: 'Spawns lightweight concurrent threads. Increases ATK speed by 30%.'
+                };
+            case 'java':
+                return {
+                    name: 'Enterprise Abstraction',
+                    desc: 'Deep inheritance hierarchies build absolute code stability.'
+                };
+            case 'rb':
+                return {
+                    name: 'Elegant Block Injection',
+                    desc: 'Synthesizes domain-specific blocks on the fly. Boosts CHA by 20%.'
+                };
+            case 'html':
+                return {
+                    name: 'Flexbox Realignment',
+                    desc: 'Instantly re-orders layout layers, neutralizing design drift.'
+                };
+            default:
+                return {
+                    name: 'Standard Execution Loop',
+                    desc: 'Fires sequential operations smoothly. Baseline stats are perfectly balanced.'
+                };
+        }
+    };
+
+    const getGuildName = (company) => {
+        if (!company) return 'Freelance Alliance';
+        let clean = company.trim();
+        if (clean.startsWith('@')) {
+            clean = clean.slice(1);
+        }
+        return clean.charAt(0).toUpperCase() + clean.slice(1);
+    };
+
+    const getDevRarity = (followers, repos, primaryLang = 'js') => {
         const score = followers * 5 + repos * 2;
-        if (score >= 10000) return 'Mythic Systems Architect';
-        if (score >= 2500)  return 'Legendary Engine Artificer';
-        if (score >= 700)   return 'Epic Full-Stack Sorcerer';
-        if (score >= 150)   return 'Rare Web Guardian';
-        if (score >= 30)    return 'Uncommon Code Squire';
-        return 'Common Compiler Apprentice';
+        let prefix = 'Common';
+        if (score >= 10000) prefix = 'Mythic';
+        else if (score >= 2500)  prefix = 'Legendary';
+        else if (score >= 700)   prefix = 'Epic';
+        else if (score >= 150)   prefix = 'Rare';
+        else if (score >= 30)    prefix = 'Uncommon';
+        return `${prefix} ${getDeveloperClass(primaryLang)}`;
     };
 
     /** Dev score formula for leaderboard ranking */
@@ -368,7 +473,53 @@ document.addEventListener('DOMContentLoaded', () => {
         const backCreated = document.getElementById('back-stat-created');
         if (backRank)    backRank.textContent    = state.rarity.split(' ').slice(0, 2).join(' ').toUpperCase();
         if (backLang)    backLang.textContent    = `${pri.name.toUpperCase()} / ${sec.name.toUpperCase()}`;
-        if (backCreated) backCreated.textContent = `EST. ${new Date().getFullYear() - state.lvl}`;
+        
+        let year = new Date().getFullYear() - state.lvl;
+        if (state.createdAt) {
+            const parsedYear = new Date(state.createdAt).getFullYear();
+            if (!isNaN(parsedYear)) {
+                year = parsedYear;
+            }
+        }
+        if (backCreated) backCreated.textContent = `EST. ${year}`;
+
+        // Attribute Meters
+        const intScore = Math.max(10, Math.min(Math.round((state.atk * 1.5) + (state.lvl * 2)), 100));
+        const chaScore = Math.max(10, Math.min(Math.round(Math.log10(state.def + 1) * 25), 100));
+        const ratio = state.atk > 0 ? (state.hp / state.atk) : state.hp;
+        const agiScore = Math.max(15, Math.min(Math.round(Math.log10(ratio + 1) * 20 + 20), 100));
+
+        const valInt = document.getElementById('back-val-int');
+        const barInt = document.getElementById('back-bar-int');
+        if (valInt) valInt.textContent = intScore;
+        if (barInt) barInt.style.width = `${intScore}%`;
+
+        const valCha = document.getElementById('back-val-cha');
+        const barCha = document.getElementById('back-bar-cha');
+        if (valCha) valCha.textContent = chaScore;
+        if (barCha) barCha.style.width = `${chaScore}%`;
+
+        const valAgi = document.getElementById('back-val-agi');
+        const barAgi = document.getElementById('back-bar-agi');
+        if (valAgi) valAgi.textContent = agiScore;
+        if (barAgi) barAgi.style.width = `${agiScore}%`;
+
+        // Update Passive Ability Node
+        const passive = getPassiveAbility(state.primaryLang);
+        const passName = document.getElementById('card-passive-name');
+        const passDesc = document.getElementById('card-passive-desc');
+        if (passName) passName.textContent = passive.name;
+        if (passDesc) passDesc.textContent = passive.desc;
+
+        // Update Guild and Quest Status
+        const guildTitle = document.getElementById('card-guild-title');
+        if (guildTitle) {
+            guildTitle.textContent = `Guild: ${getGuildName(state.company)}`;
+        }
+        const questBadge = document.getElementById('card-quest-badge');
+        if (questBadge) {
+            questBadge.style.display = state.hireable ? 'inline-block' : 'none';
+        }
 
         updateVerifiedBadge();
         updateCodeBlocks();
@@ -408,6 +559,9 @@ document.addEventListener('DOMContentLoaded', () => {
             def: state.def, lvl: state.lvl, rarity: state.rarity,
             theme: state.theme, primaryLang: state.primaryLang,
             secondaryLang: state.secondaryLang,
+            createdAt: state.createdAt,
+            company: state.company,
+            hireable: state.hireable,
         };
         try { localStorage.setItem('devcard_state', JSON.stringify(saved)); } catch (_) {}
     }
@@ -481,7 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
             valNode.textContent = fmt(val);
             state[stateProp] = val;
             if (stateProp === 'def' || stateProp === 'atk') {
-                state.rarity = getDevRarity(state.def, state.atk);
+                state.rarity = getDevRarity(state.def, state.atk, state.primaryLang);
                 dom.customTitle.value = state.rarity;
             }
             revokeVerification(); // Manually edited → revoke verified status
@@ -510,10 +664,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     dom.primaryLangSelect.addEventListener('change', (e) => {
-        state.primaryLang = e.target.value; updateCardGraphics();
+        state.primaryLang = e.target.value;
+        state.rarity = getDevRarity(state.def, state.atk, state.primaryLang);
+        dom.customTitle.value = state.rarity;
+        updateCardGraphics();
     });
     dom.secondaryLangSelect.addEventListener('change', (e) => {
-        state.secondaryLang = e.target.value; updateCardGraphics();
+        state.secondaryLang = e.target.value;
+        updateCardGraphics();
     });
 
     dom.themeCards.forEach(card => {
@@ -603,10 +761,13 @@ document.addEventListener('DOMContentLoaded', () => {
             state.def          = userData.followers    || 0;
             state.hp           = hp;
             state.lvl          = Math.min(99, lvl);
-            state.rarity       = getDevRarity(state.def, state.atk);
             state.primaryLang  = topLangs[0] || 'js';
             state.secondaryLang = topLangs[1] || 'ts';
+            state.rarity       = getDevRarity(state.def, state.atk, state.primaryLang);
             state.isVerified   = true;   // ✅ Fresh from API — verified!
+            state.createdAt    = userData.created_at || new Date().toISOString();
+            state.company      = userData.company || '';
+            state.hireable     = !!userData.hireable;
 
             syncSlidersWithState();
             updateCardGraphics();
@@ -639,10 +800,13 @@ document.addEventListener('DOMContentLoaded', () => {
         state.def          = Math.abs(hash % 380) * 8 + 12;
         state.hp           = Math.abs(hash % 120) * 150 + 1200;
         state.lvl          = Math.abs(hash % 12) + 1;
-        state.rarity       = getDevRarity(state.def, state.atk);
         state.primaryLang  = langs[Math.abs(hash)       % langs.length];
         state.secondaryLang = langs[Math.abs(hash + 1)  % langs.length];
+        state.rarity       = getDevRarity(state.def, state.atk, state.primaryLang);
         state.isVerified   = false;  // offline sim is never verified
+        state.createdAt    = new Date(new Date().getFullYear() - state.lvl, 0, 1).toISOString();
+        state.company      = Math.abs(hash) % 2 === 0 ? 'Indie Devs' : '';
+        state.hireable     = Math.abs(hash) % 3 === 0;
 
         syncSlidersWithState();
         updateCardGraphics();
