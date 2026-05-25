@@ -38,7 +38,7 @@
 
     /* Card Dimensions */
     --card-width: 330px;
-    --card-height: 480px;
+    --card-height: 500px;
     --border-radius-card: 18px;
 
     /* Fonts */
@@ -843,7 +843,7 @@ body.light-mode .preview-badge {
 }
 
 .card-front {
-    padding: 1.4rem;
+    padding: 1.15rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -1073,14 +1073,14 @@ body.light-mode .preview-badge {
 /* Portrait */
 .card-portrait-container {
     width: 100%;
-    aspect-ratio: 1.4;
+    aspect-ratio: 1.95;
     border-radius: 12px;
     overflow: hidden;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.45rem;
 }
 
 .portrait-mesh {
@@ -1128,14 +1128,14 @@ body.light-mode .preview-badge {
 
 /* Passive Ability Block */
 .card-passive-block {
-    margin-bottom: 0.5rem;
-    padding: 0.4rem 0.6rem;
+    margin-bottom: 0.4rem;
+    padding: 0.3rem 0.5rem;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    gap: 0.15rem;
+    gap: 0.1rem;
     transition: all 0.3s ease;
 }
 
@@ -1171,8 +1171,8 @@ body.light-mode .card-passive-block:hover {
 }
 
 .passive-desc {
-    font-size: 0.46rem;
-    line-height: 1.35;
+    font-size: 0.44rem;
+    line-height: 1.25;
     color: var(--text-muted);
     margin: 0;
     font-style: italic;
@@ -1225,15 +1225,15 @@ body.light-mode .card-passive-block:hover {
 .card-bio-block {
     background: rgba(0, 0, 0, 0.25);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 0.6rem 0.8rem;
+    padding: 0.4rem 0.6rem;
     border-radius: 8px;
-    margin-bottom: 0.65rem;
-    min-height: 50px;
+    margin-bottom: 0.45rem;
+    min-height: 40px;
 }
 
 .bio-text {
-    font-size: 0.7rem;
-    line-height: 1.45;
+    font-size: 0.64rem;
+    line-height: 1.35;
     color: rgba(255, 255, 255, 0.55);
     font-style: italic;
 }
@@ -1242,18 +1242,18 @@ body.light-mode .card-passive-block:hover {
 .card-stats-grid {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
-    margin-bottom: 0.65rem;
+    gap: 0.25rem;
+    margin-bottom: 0.45rem;
 }
 
 .card-stat-node {
     display: flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.4rem;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.04);
     border-radius: 8px;
-    padding: 0.32rem 0.6rem;
+    padding: 0.2rem 0.45rem;
 }
 
 .stat-icon {
