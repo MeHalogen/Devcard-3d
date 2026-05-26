@@ -1,3 +1,5 @@
+*.roocustominstructions
+*.clinecustominstructions
 .vercel
 config.js
 .DS_Store
