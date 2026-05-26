@@ -1046,6 +1046,21 @@ body.light-mode .preview-badge {
     margin-top: 0.05rem;
 }
 
+.established-year {
+    font-size: 0.52rem;
+    color: rgba(255, 215, 0, 0.9);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 700;
+    margin-top: 0.3rem;
+    padding: 0.15rem 0.4rem;
+    background: rgba(255, 215, 0, 0.12);
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    border-radius: 4px;
+    display: inline-block;
+}
+
 .card-level-badge {
     display: flex;
     flex-direction: column;
@@ -1382,8 +1397,6 @@ body.light-mode .card-passive-block:hover {
     letter-spacing: 1.5px;
     margin-bottom: 0.75rem;
     text-transform: uppercase;
-}
-
 }
 
 .back-attributes {

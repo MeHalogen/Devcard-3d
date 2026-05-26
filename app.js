@@ -487,9 +487,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (backCreated) backCreated.textContent = `EST. ${year}`;
 
-        // Attribute Meters
-        const intScore = Math.max(10, Math.min(Math.round((state.atk * 1.5) + (state.lvl * 2)), 100));
-        const chaScore = Math.max(10, Math.min(Math.round(Math.log10(state.def + 1) * 25), 100));
+        // Update front card established year
+        const frontEstablished = document.getElementById('card-established-year');
+        if (frontEstablished) frontEstablished.textContent = `EST. ${year}`;
+
+        // Attribute Meters - Improved formulas for better scaling
+        // INT (Intellect): Based on code activity (repos × contributions)
+        const intScore = Math.max(10, Math.min(Math.round((state.atk * 1.2) + (state.lvl * 3)), 100));
+        
+        // CHA (Charisma): Based on followers with sqrt scaling for better distribution
+        // 0-100 followers = 10-30, 1k = 50, 10k = 75, 100k+ = 95-100
+        const chaScore = Math.max(10, Math.min(Math.round(Math.sqrt(state.def) * 0.5 + 10), 100));
+        
+        // AGI (Agility): Based on repo/contribution efficiency
         const ratio = state.atk > 0 ? (state.hp / state.atk) : state.hp;
         const agiScore = Math.max(15, Math.min(Math.round(Math.log10(ratio + 1) * 20 + 20), 100));
 
