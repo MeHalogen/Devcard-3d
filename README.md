@@ -14,7 +14,7 @@ Turn your GitHub profile statistics into interactive, mouse-tilting 3D holograph
 
 I wrote a comprehensive technical write-up detailing the CSS 3D transforms, holographic blend modes, and anti-cheat database verification used in this project:
 
-👉 **[Read the Full Technical Deep-Dive on Dev.to](https://dev.to/mehalogen)** *(Replace this with your exact published Dev.to URL!)*
+👉 **[Read the Full Technical Deep-Dive on Dev.to](https://dev.to/mehalogen/i-built-devcard-3d-turn-github-profiles-into-holographic-trading-cards-3pp2)**
 
 ---
 
