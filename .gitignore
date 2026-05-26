@@ -1,3 +1,10 @@
 .vercel
 config.js
 .DS_Store
+
+# Internal ops/process files (should not be tracked in public repo)
+.tasks/
+startup-rules.md
+*.memory.md
+*.custominstructions
+*.instructions
