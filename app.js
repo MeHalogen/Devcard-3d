@@ -31,15 +31,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ---- App State ----
     const state = {
-        username:      'MeHalogen',
-        name:          'Mehal Srivastava',
-        bio:           'Building magical developer experiences at Halonic. Shipping products at lightning speed.',
-        avatarUrl:     'https://avatars.githubusercontent.com/u/MeHalogen?v=4',
-        hp:            5000,
-        atk:           42,
-        def:           1200,
-        lvl:           8,
-        rarity:        'Epic Full-Stack Architect',
+        username:      '--',
+        name:          '--',
+        bio:           'This mysterious developer lets their code speak for itself.',
+        avatarUrl:     'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%238b949e"><circle cx="12" cy="8" r="4"/><path d="M12 14c-6.1 0-8 4-8 4v2h16v-2s-1.9-4-8-4z"/></svg>',
+        hp:            0,
+        atk:           0,
+        def:           0,
+        lvl:           1,
+        rarity:        'Common Developer',
         theme:         'holo-classic',
         primaryLang:   'js',
         secondaryLang: 'ts',
@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
         authUser:      null,    // { login, avatarUrl, name } when authenticated
         isOnLeaderboard: false,
         isLightMode:   false,
-        createdAt:     '2020-01-01T00:00:00Z',
-        company:       'Halonic',
-        hireable:      true,
+        createdAt:     new Date().toISOString(),
+        company:       '',
+        hireable:      false,
     };
 
     // ---- Language configuration ----
