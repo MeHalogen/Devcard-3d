@@ -31,26 +31,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ---- App State ----
     const state = {
-        username:      'torvalds',
-        name:          'Linus Torvalds',
-        bio:           'Writes kernel modules in his sleep. Direct commands bypass compiler limitations.',
-        avatarUrl:     'https://avatars.githubusercontent.com/u/1024?v=4',
-        hp:            18450,
-        atk:           83,
-        def:           190500,
-        lvl:           18,
-        rarity:        'Legendary Systems Chronomancer',
+        username:      'MeHalogen',
+        name:          'Mehal Srivastava',
+        bio:           'Building magical developer experiences at Halonic. Shipping products at lightning speed.',
+        avatarUrl:     'https://avatars.githubusercontent.com/u/MeHalogen?v=4',
+        hp:            5000,
+        atk:           42,
+        def:           1200,
+        lvl:           8,
+        rarity:        'Epic Full-Stack Architect',
         theme:         'holo-classic',
-        primaryLang:   'cpp',
-        secondaryLang: 'rs',
+        primaryLang:   'js',
+        secondaryLang: 'ts',
         isFlipped:     false,
         isVerified:    false,   // true only when stats come directly from GitHub API or OAuth
         authUser:      null,    // { login, avatarUrl, name } when authenticated
         isOnLeaderboard: false,
         isLightMode:   false,
-        createdAt:     '2005-10-20T00:00:00Z',
-        company:       'Linux Foundation',
-        hireable:      false,
+        createdAt:     '2020-01-01T00:00:00Z',
+        company:       'Halonic',
+        hireable:      true,
     };
 
     // ---- Language to Element Map ----
