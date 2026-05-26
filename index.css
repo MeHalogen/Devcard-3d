@@ -2797,3 +2797,52 @@ body.light-mode #carbonads {
         font-size: 0.7rem;
     }
 }
+
+/* ==========================================================================
+   FOLLOW CREATOR SOCIAL LINKS STYLING
+   ========================================================================== */
+.footer-social-links {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 0.6rem;
+    width: 100%;
+}
+
+.footer-social-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    font-family: var(--font-mono);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+.footer-social-link i {
+    width: 14px;
+    height: 14px;
+    color: var(--accent);
+    transition: color var(--transition-speed) ease;
+}
+
+.footer-social-link:hover {
+    color: var(--text-main);
+    transform: translateY(-1px);
+}
+
+.footer-social-link:hover i {
+    color: var(--text-main);
+}
+
+@media (max-width: 600px) {
+    .footer-social-links {
+        gap: 0.85rem;
+    }
+    .footer-social-link {
+        font-size: 0.75rem;
+    }
+}
