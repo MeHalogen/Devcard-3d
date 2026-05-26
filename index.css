@@ -2335,13 +2335,159 @@ body.embed-mode .card-perspective-container {
    RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
+/* Hide horizontal scrollbar for clean horizontal tab navigation */
+.tabs-header {
+    scrollbar-width: none; /* Firefox */
+}
+.tabs-header::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+@media (max-width: 900px) {
+    .app-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin: 1.5rem auto;
+        padding: 0 1rem;
+    }
+    
+    /* Reorder columns so Card Viewport is on top on mobile */
+    .promo-banner {
+        order: 1;
+    }
+    
+    .card-viewport {
+        order: 2;
+    }
+    
+    .control-panel {
+        order: 3;
+    }
+    
+    .leaderboard-container {
+        order: 4;
+    }
+}
+
 @media (max-width: 640px) {
-    .app-header { padding: 1rem 4%; }
-    .logo { font-size: 1.25rem; }
+    .app-header { padding: 0.85rem 4%; }
+    .logo { font-size: 1.15rem; }
+    .logo-icon { width: 20px; height: 20px; }
+    
+    /* Optimize Header Actions for small screens */
     .github-link span { display: none; }
+    .btn-github-auth span { display: none; }
+    .btn-github-auth {
+        padding: 0.5rem;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        justify-content: center;
+    }
+    #user-chip-name { display: none; }
+    .user-profile-chip { padding: 0.35rem; }
+    
+    /* Reduce large panels padding on mobile */
+    .control-panel, 
+    .exporter-container, 
+    .leaderboard-container {
+        padding: 1.25rem 1rem;
+        border-radius: 16px;
+    }
+    
     .leaderboard-row { gap: 0.6rem; padding: 0.65rem 0.75rem; }
-    .lb-sub { display: none; }
-    .modal-card { padding: 1.75rem 1.5rem; }
+    .modal-card { padding: 1.5rem 1.25rem; }
+}
+
+@media (max-width: 600px) {
+    .promo-banner {
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 0.75rem 1rem;
+    }
+    .promo-content {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Scale the 3D card down cleanly to fit narrow screens without overflow */
+    :root {
+        --card-width: 300px;
+        --card-height: 454px;
+    }
+    
+    .card-front {
+        padding: 0.75rem;
+    }
+    
+    .card-username {
+        font-size: 1.1rem;
+    }
+    
+    .portrait-avatar {
+        width: 62px;
+        height: 62px;
+    }
+    
+    .stat-label {
+        font-size: 0.68rem;
+    }
+    
+    .stat-value {
+        font-size: 0.78rem;
+    }
+    
+    .card-passive-block p {
+        font-size: 0.65rem;
+    }
+    
+    .established-year {
+        font-size: 0.58rem;
+        padding: 0.1rem 0.3rem;
+    }
+    
+    /* Stack social shares/embed code boxes neatly on narrow viewports */
+    .code-box {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    .btn-copy {
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 350px) {
+    /* Ultra-small viewports (e.g. iPhone SE) */
+    :root {
+        --card-width: 270px;
+        --card-height: 408px;
+    }
+    
+    .card-front {
+        padding: 0.65rem;
+    }
+    
+    .card-username {
+        font-size: 1.0rem;
+    }
+    
+    .portrait-avatar {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .stat-label {
+        font-size: 0.62rem;
+    }
+    
+    .stat-value {
+        font-size: 0.72rem;
+    }
+    
+    .card-stats-grid {
+        gap: 0.15rem;
+    }
 }
 
 /* ==========================================================================
