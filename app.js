@@ -1230,19 +1230,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Check if the current user is in the top 20
-        const isUserInTop20 = ranked.slice(0, 20).some(dev => dev.username === state.username);
+        const loggedInUsername = state.authUser ? state.authUser.login : null;
+        const isLoggedInUserInTop20 = loggedInUsername ? ranked.slice(0, 20).some(dev => dev.username === loggedInUsername) : false;
         
         let displayList = ranked.slice(0, 20);
         
         // If user is logged in and verified, but not in top 20
         let pinnedRowHtml = '';
-        if (state.isVerified && state.username && !isUserInTop20) {
-            const userIndex = ranked.findIndex(dev => dev.username === state.username);
+        if (loggedInUsername && !isLoggedInUserInTop20) {
+            const userIndex = ranked.findIndex(dev => dev.username === loggedInUsername);
             const userRank = userIndex !== -1 ? userIndex + 1 : '?';
             const userDev = userIndex !== -1 ? ranked[userIndex] : {
-                username:   state.username,
-                name:       state.name,
-                avatar_url: state.avatarUrl,
+                username:   state.authUser.login,
+                name:       state.authUser.name || state.authUser.login,
+                avatar_url: state.authUser.avatarUrl,
                 score:      calcScore(state),
                 lvl:        state.lvl,
                 verified:   true,
@@ -1253,12 +1254,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const score = userDev.score.toLocaleString();
             const sub = `@${userDev.username} · LVL ${userDev.lvl || '?'}`;
             const verifiedDot = userDev.verified ? '<span class="lb-verified-dot" title="Verified via GitHub" aria-label="Verified"></span>' : '';
+            const isCurrent = userDev.username === state.username ? 'is-current-user' : '';
 
             pinnedRowHtml = `
                 <div class="leaderboard-divider" aria-hidden="true">
                     <span>•••</span>
                 </div>
-                <div class="leaderboard-row is-current-user is-pinned" role="listitem">
+                <div class="leaderboard-row ${isCurrent} is-pinned" role="listitem">
                     <span class="lb-rank" aria-label="Rank ${userRank}">#${userRank}</span>
                     <img class="lb-avatar" src="${avatar}" alt="${name}" loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/identicon/svg?seed=${userDev.username}'">
                     <div class="lb-info">
@@ -1287,6 +1289,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const score     = dev.score.toLocaleString();
             const sub       = `@${dev.username} · LVL ${dev.lvl || '?'}`;
             const verifiedDot = dev.verified ? '<span class="lb-verified-dot" title="Verified via GitHub" aria-label="Verified"></span>' : '';
+            const isAuthUser = loggedInUsername && dev.username === loggedInUsername;
 
             return `
                 <div class="leaderboard-row ${rankClass} ${isCurrent}" role="listitem">
@@ -1294,7 +1297,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img class="lb-avatar" src="${avatar}" alt="${name}" loading="lazy" onerror="this.src='https://api.dicebear.com/7.x/identicon/svg?seed=${dev.username}'">
                     <div class="lb-info">
                         <a href="https://github.com/${dev.username}" target="_blank" rel="noopener noreferrer" class="lb-profile-link">
-                            <div class="lb-name">${name}${dev.username === state.username ? ' <em style="font-size:0.7rem;font-weight:400;opacity:0.6">(You)</em>' : ''}</div>
+                            <div class="lb-name">${name}${isAuthUser ? ' <em style="font-size:0.7rem;font-weight:400;opacity:0.6">(You)</em>' : ''}</div>
                             <div class="lb-sub">${sub}</div>
                         </a>
                     </div>
