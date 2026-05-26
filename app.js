@@ -328,56 +328,132 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'Compiler Squire';
     };
 
-    const getPassiveAbility = (primaryLang) => {
+    // ========================================================================
+    // DYNAMIC CONTENT ENGINE - Assigns unique flavor based on stats
+    // ========================================================================
+    
+    const getPassiveAbility = (primaryLang, state) => {
         const lang = (primaryLang || 'js').toLowerCase();
-        switch (lang) {
-            case 'rs':
-                return {
-                    name: 'Borrow Checker Guard',
-                    desc: 'Immune to memory leaks and segmentation faults. Increases card DEF by 20%.'
-                };
-            case 'cpp':
-                return {
-                    name: 'Pointer Redirection',
-                    desc: 'Direct memory bypasses compiler blocks. Attacks deal double crit damage.'
-                };
-            case 'js':
-            case 'ts':
-                return {
-                    name: 'Asynchronous Evocation',
-                    desc: 'Non-blocking runtime loops. Allows executing multiple parallel actions.'
-                };
-            case 'py':
-                return {
-                    name: 'Indentation Druidry',
-                    desc: 'Clean spatial structures grant 15% life regeneration.'
-                };
-            case 'go':
-                return {
-                    name: 'Goroutine Concurrency',
-                    desc: 'Spawns lightweight concurrent threads. Increases ATK speed by 30%.'
-                };
-            case 'java':
-                return {
-                    name: 'Enterprise Abstraction',
-                    desc: 'Deep inheritance hierarchies build absolute code stability.'
-                };
-            case 'rb':
-                return {
-                    name: 'Elegant Block Injection',
-                    desc: 'Synthesizes domain-specific blocks on the fly. Boosts CHA by 20%.'
-                };
-            case 'html':
-                return {
-                    name: 'Flexbox Realignment',
-                    desc: 'Instantly re-orders layout layers, neutralizing design drift.'
-                };
-            default:
-                return {
-                    name: 'Standard Execution Loop',
-                    desc: 'Fires sequential operations smoothly. Baseline stats are perfectly balanced.'
-                };
+        
+        // Language-specific base abilities
+        const abilities = {
+            'rs': {
+                name: 'Memory Mastery',
+                desc: 'Zero-cost abstractions dominate the battlefield. Immune to memory leaks.'
+            },
+            'cpp': {
+                name: 'Raw Power',
+                desc: 'Direct hardware control. Critical hits deal 2× damage and pierce armor.'
+            },
+            'js': {
+                name: 'Async Sorcery',
+                desc: 'Execute multiple spells simultaneously. Never wait, never block.'
+            },
+            'ts': {
+                name: 'Type Guardian',
+                desc: 'Compile-time shields prevent runtime disasters. DEF +25%.'
+            },
+            'py': {
+                name: 'Zen Flow',
+                desc: 'Elegant simplicity heals wounds. Regenerate 15% HP every turn.'
+            },
+            'go': {
+                name: 'Goroutine Swarm',
+                desc: 'Deploy 10,000 lightweight warriors. Attack speed +30%.'
+            },
+            'java': {
+                name: 'Enterprise Fortress',
+                desc: 'Layered abstractions form impenetrable walls. Damage reduction +25%.'
+            },
+            'rb': {
+                name: 'Ruby Magic',
+                desc: 'Metaprogramming rewrites reality. Charisma +20%, dodge +15%.'
+            },
+            'html': {
+                name: 'Flexbox Mastery',
+                desc: 'Perfect positioning every time. Reorganize the battlefield at will.'
+            },
+            'css': {
+                name: 'Style Cascade',
+                desc: 'Visual dominance. Stuns enemies with aesthetic perfection.'
+            },
+            'php': {
+                name: 'Server Sorcery',
+                desc: 'Backend spells never miss. Consistent damage output.'
+            },
+            'swift': {
+                name: 'Protocol Power',
+                desc: 'iOS optimization grants bonus mobility. Movement speed +40%.'
+            },
+            'kotlin': {
+                name: 'Null Safety',
+                desc: 'NullPointerException immunity. Prevents instant death scenarios.'
+            }
+        };
+        
+        return abilities[lang] || {
+            name: 'Clean Execution',
+            desc: 'Reliable and balanced. No weaknesses, predictable power.'
+        };
+    };
+
+    const getDynamicBio = (state) => {
+        const { hp, atk, def, lvl, bio } = state;
+        
+        // If user has custom bio, use it
+        if (bio && bio !== 'This mysterious developer lets their code speak for itself.') {
+            return bio;
         }
+        
+        // Generate dynamic bio based on stats
+        const totalStats = hp + atk + def;
+        const isVeteran = lvl >= 10;
+        const isInfluencer = def >= 10000;
+        const isProlific = hp >= 50;
+        const isActive = atk >= 100;
+        
+        // High-tier bios (exceptional devs)
+        if (totalStats > 300000) {
+            return 'Legendary architect whose code shapes the industry. Repositories echo across the dev world.';
+        }
+        if (isInfluencer && isProlific) {
+            return 'Prolific builder with massive reach. Inspires thousands with every commit.';
+        }
+        if (isVeteran && isProlific && isActive) {
+            return 'Battle-tested veteran. Has weathered framework wars and emerged victorious.';
+        }
+        
+        // Mid-tier bios (solid devs)
+        if (isInfluencer) {
+            return 'Developer with serious influence. Their opinions move communities.';
+        }
+        if (isProlific && isActive) {
+            return 'Ships code faster than most can write documentation. Unstoppable momentum.';
+        }
+        if (isVeteran && isActive) {
+            return 'Seasoned pro who\'s seen it all. Commits with surgical precision.';
+        }
+        if (isProlific) {
+            return 'Prolific creator. Builds projects like others write tweets.';
+        }
+        if (isActive) {
+            return 'High-velocity coder. Commits flow like a river in spring.';
+        }
+        
+        // New/rising devs
+        if (lvl <= 2) {
+            return 'Rising star in the dev world. Fresh perspective, hungry energy.';
+        }
+        if (lvl <= 5) {
+            return 'Building momentum. Each project sharpens their edge.';
+        }
+        
+        // Default tiers
+        if (isVeteran) {
+            return 'Experienced developer. Calm under pressure, reliable under fire.';
+        }
+        
+        return 'Crafting elegant solutions one commit at a time. Steady progress, solid foundations.';
     };
 
     const getGuildName = (company) => {
@@ -518,8 +594,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (valAgi) valAgi.textContent = agiScore;
         if (barAgi) barAgi.style.width = `${agiScore}%`;
 
-        // Update Passive Ability Node
-        const passive = getPassiveAbility(state.primaryLang);
+        // Update Passive Ability Node (with stat-based selection)
+        const passive = getPassiveAbility(state.primaryLang, state);
         const passName = document.getElementById('card-passive-name');
         const passDesc = document.getElementById('card-passive-desc');
         if (passName) passName.textContent = passive.name;
@@ -774,7 +850,6 @@ document.addEventListener('DOMContentLoaded', () => {
             state.username     = userData.login;
             state.name         = userData.name || userData.login;
             state.avatarUrl    = userData.avatar_url;
-            state.bio          = userData.bio || 'This mysterious developer lets their code speak for itself.';
             state.atk          = userData.public_repos || 1;
             state.def          = userData.followers    || 0;
             state.hp           = hp;
@@ -782,6 +857,9 @@ document.addEventListener('DOMContentLoaded', () => {
             state.primaryLang  = topLangs[0] || 'js';
             state.secondaryLang = topLangs[1] || 'ts';
             state.rarity       = getDevRarity(state.def, state.atk, state.primaryLang);
+            
+            // Generate dynamic bio based on stats (after all stats are set)
+            state.bio          = userData.bio || getDynamicBio(state);
             state.isVerified   = true;   // ✅ Fresh from API — verified!
             state.createdAt    = userData.created_at || new Date().toISOString();
             state.company      = userData.company || '';
