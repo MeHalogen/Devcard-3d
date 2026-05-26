@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — DevCard 3D</title>
+    <meta name="description" content="Privacy Policy for DevCard 3D. Learn how we handle GitHub OAuth, public profile stats, and leaderboard rankings.">
+    <link rel="canonical" href="https://devcard3d.vercel.app/privacy.html">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="index.css">
+    
+    <script>
+        // Inline theme resolver to prevent flash of light/dark mode
+        if (localStorage.getItem('devcard_light_mode') === '1') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
+</head>
+<body>
+    <!-- Background Glow Decorations -->
+    <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-3" aria-hidden="true"></div>
+
+    <!-- ===================================================================
+         HEADER
+    =================================================================== -->
+    <header class="app-header" role="banner">
+        <a href="index.html" class="logo" aria-label="DevCard 3D Home">
+            <i data-lucide="layers" class="logo-icon" aria-hidden="true"></i>
+            <span>DevCard<span class="highlight">3D</span></span>
+        </a>
+        <div class="header-links">
+            <a href="index.html" class="btn-back-home">
+                <i data-lucide="arrow-left" aria-hidden="true"></i> Back to App
+            </a>
+        </div>
+    </header>
+
+    <!-- ===================================================================
+         LEGAL CONTENT CONTAINER
+    =================================================================== -->
+    <main class="legal-container" role="main">
+        <article class="legal-panel">
+            <header class="legal-header">
+                <a href="index.html" class="btn-back-home" style="margin-bottom: 1rem;">
+                    <i data-lucide="arrow-left" aria-hidden="true"></i> Back to App
+                </a>
+                <h1>Privacy Policy</h1>
+                <span class="last-updated">Last Updated: May 26, 2026</span>
+            </header>
+
+            <section class="legal-content">
+                <p>At DevCard 3D, we are committed to protecting your privacy. This Privacy Policy describes how we collect, use, and process your data when you use our web application, particularly in connection with GitHub Authentication (OAuth) and global leaderboard rankings.</p>
+
+                <h2>1. Information We Collect</h2>
+                <p>DevCard 3D is designed to be highly transparent and secure. We collect and process the following categories of data:</p>
+                <ul>
+                    <li><strong>GitHub Public Profile Data:</strong> When you enter a username or authenticate via GitHub OAuth, we fetch public statistical data directly from the official GitHub API. This includes your public repository count, follower counts, total commit data, top language metrics, registration date, company name, and hiring availability status.</li>
+                    <li><strong>Authenticated Account Details (OAuth):</strong> If you sign in using GitHub OAuth, we receive a secure access token along with your GitHub username, display name, and avatar URL. We do <strong>not</strong> access, collect, or store private repositories, code files, or personal contact details.</li>
+                    <li><strong>Leaderboard Ranking Data:</strong> If you choose to join the global leaderboard, your verified stats (developer score, level, username, and avatar URL) are saved in our database to compile global developer tiers.</li>
+                </ul>
+
+                <h2>2. How We Use Your Information</h2>
+                <p>We use the collected information exclusively for the following purposes:</p>
+                <ul>
+                    <li>To generate and render your interactive, 3D holographic developer trading card.</li>
+                    <li>To authenticate your identity via GitHub OAuth to prevent cheat submissions on the leaderboard.</li>
+                    <li>To display verified developer rankings and tiers on the public global leaderboard.</li>
+                    <li>To generate standard markdown badges and responsive iframe embeds for portfolios.</li>
+                </ul>
+
+                <h2>3. Data Storage and Retention</h2>
+                <ul>
+                    <li><strong>Local Storage:</strong> Your active card configuration (theme choice, custom biography, and manual stats) is stored locally on your device's browser cache using <code>localStorage</code> for state persistence.</li>
+                    <li><strong>Leaderboard Database:</strong> Leaderboard entries are securely hosted on Supabase. Only authenticated, verified profile statistics are stored. If you choose to sign out or request account removal, your record will be removed from active lists.</li>
+                    <li><strong>No Third-Party Sharing:</strong> We do not sell, rent, trade, or distribute your public developer profile data to third-party marketing networks or external entities.</li>
+                </ul>
+
+                <h2>4. Your Rights and Controls</h2>
+                <p>You have full ownership of your data on DevCard 3D:</p>
+                <ul>
+                    <li><strong>Leaderboard Removal:</strong> You can choose to remove your card from the global rankings at any time by signing out of your account or contacting us to request record purging.</li>
+                    <li><strong>Creative Customization:</strong> You are free to manually override stats and biographies in "Creative Mode" for custom card displays; these changes are kept local to your browser and are never uploaded to the leaderboard.</li>
+                </ul>
+
+                <h2>5. Contact Us</h2>
+                <p>If you have any questions, concerns, or requests regarding this Privacy Policy or wish to have your database record cleared, please reach out to the project team at <strong>legal@halonic.com</strong> or open an issue on our GitHub repository.</p>
+            </section>
+        </article>
+    </main>
+
+    <!-- ===================================================================
+         GLOBAL PAGE FOOTER
+    =================================================================== -->
+    <footer class="global-footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-attribution">
+                <i data-lucide="layers" class="footer-logo-icon" aria-hidden="true"></i>
+                <span>A project by <strong class="footer-halonic-text">Halonic</strong>. Crafted with magic and verified GitHub statistics.</span>
+            </div>
+            <div class="footer-legal-links">
+                <a href="privacy.html" class="footer-legal-link">Privacy Policy</a>
+                <span style="color: var(--panel-border); font-size: 0.8125rem;" aria-hidden="true">|</span>
+                <a href="terms.html" class="footer-legal-link">Terms of Service</a>
+            </div>
+            <p class="footer-copyright">&copy; 2026 Halonic. Open source under the MIT License.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply body theme class if light mode is enabled in localStorage
+            if (localStorage.getItem('devcard_light_mode') === '1') {
+                document.body.classList.add('light-mode');
+            }
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service — DevCard 3D</title>
+    <meta name="description" content="Terms of Service for DevCard 3D. Learn about acceptable use, verified stats, and open-source licensing.">
+    <link rel="canonical" href="https://devcard3d.vercel.app/terms.html">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="index.css">
+    
+    <script>
+        // Inline theme resolver to prevent flash of light/dark mode
+        if (localStorage.getItem('devcard_light_mode') === '1') {
+            document.documentElement.classList.add('light-mode');
+        }
+    </script>
+</head>
+<body>
+    <!-- Background Glow Decorations -->
+    <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-3" aria-hidden="true"></div>
+
+    <!-- ===================================================================
+         HEADER
+    =================================================================== -->
+    <header class="app-header" role="banner">
+        <a href="index.html" class="logo" aria-label="DevCard 3D Home">
+            <i data-lucide="layers" class="logo-icon" aria-hidden="true"></i>
+            <span>DevCard<span class="highlight">3D</span></span>
+        </a>
+        <div class="header-links">
+            <a href="index.html" class="btn-back-home">
+                <i data-lucide="arrow-left" aria-hidden="true"></i> Back to App
+            </a>
+        </div>
+    </header>
+
+    <!-- ===================================================================
+         LEGAL CONTENT CONTAINER
+    =================================================================== -->
+    <main class="legal-container" role="main">
+        <article class="legal-panel">
+            <header class="legal-header">
+                <a href="index.html" class="btn-back-home" style="margin-bottom: 1rem;">
+                    <i data-lucide="arrow-left" aria-hidden="true"></i> Back to App
+                </a>
+                <h1>Terms of Service</h1>
+                <span class="last-updated">Last Updated: May 26, 2026</span>
+            </header>
+
+            <section class="legal-content">
+                <p>Welcome to DevCard 3D. By accessing or using our web application, you agree to comply with and be bound by the following Terms of Service. If you do not agree to these terms, please do not use the application.</p>
+
+                <h2>1. Acceptance of Terms</h2>
+                <p>By generating a trading card, authenticating via GitHub OAuth, or registering on the global developer leaderboard, you explicitly agree to these Terms of Service and our associated Privacy Policy. These terms apply to all visitors, authenticated users, and others who access the application.</p>
+
+                <h2>2. Acceptable Use and Restrictions</h2>
+                <p>You agree to use DevCard 3D only for lawful, professional, and positive community purposes. You agree not to:</p>
+                <ul>
+                    <li>Use the customizer panel to write names, biographies, or titles that are offensive, harassing, abusive, defamatory, or violate community decency standards.</li>
+                    <li>Attempt to inflate, forge, or manually manipulate database metrics on the global leaderboard.</li>
+                    <li>Utilize automated web-scraping bots or heavy script sequences to fetch stats from the application in a manner that exceeds fair-use API limits or disrupts site performance.</li>
+                </ul>
+
+                <h2>3. Verified Statistics and OAuth Authenticity</h2>
+                <ul>
+                    <li><strong>Stat Integrity:</strong> Leaderboard entries are strictly reserved for accounts that have successfully verified their identity using our secure GitHub OAuth authentication. The developer score is calculated objectively from verified repositories, followers, experience, and contribution history.</li>
+                    <li><strong>Creative Customization:</strong> Manual adjustments to card stats (via "Creative Mode" sliders) are permitted exclusively for personal, off-leaderboard visual previewing, portfolio embeds, and local PNG exports. Manual changes cannot be submitted to the global ranks.</li>
+                </ul>
+
+                <h2>4. Intellectual Property and Open Source Licensing</h2>
+                <ul>
+                    <li><strong>Application Codebase:</strong> The DevCard 3D application is open-source software, licensed globally under the **MIT License**. You are free to inspect, modify, fork, or host the repository in accordance with the license conditions.</li>
+                    <li><strong>Trading Cards &amp; Assets:</strong> Custom generated card visual combinations, custom text titles, and code embeds are licensed to you for free, personal, and professional portfolio use. You retain ownership over the public profile information you import.</li>
+                </ul>
+
+                <h2>5. Disclaimer of Warranties</h2>
+                <p>DEVCARD 3D IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF TITLE, NON-INFRINGEMENT, OR IMPLIED WARRANTIES OF MERCHANTABILITY. WE DO NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, COMPLETELY ERROR-FREE, SECURE, OR THAT STATISTICAL ESTIMATIONS PRECISELY REFLECT REAL-WORLD CODING PRODUCTIVITY.</p>
+
+                <h2>6. Limitation of Liability</h2>
+                <p>IN NO EVENT SHALL HALONIC, ITS DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES arising out of your access to, use of, or inability to use the application or any card export features.</p>
+
+                <h2>7. Modifications to Terms</h2>
+                <p>We reserve the right, at our sole discretion, to modify or replace these Terms of Service at any time. When updates are published, the "Last Updated" date at the top of this document will be modified. Continued use of the application constitutes acceptance of updated terms.</p>
+            </section>
+        </article>
+    </main>
+
+    <!-- ===================================================================
+         GLOBAL PAGE FOOTER
+    =================================================================== -->
+    <footer class="global-footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-attribution">
+                <i data-lucide="layers" class="footer-logo-icon" aria-hidden="true"></i>
+                <span>A project by <strong class="footer-halonic-text">Halonic</strong>. Crafted with magic and verified GitHub statistics.</span>
+            </div>
+            <div class="footer-legal-links">
+                <a href="privacy.html" class="footer-legal-link">Privacy Policy</a>
+                <span style="color: var(--panel-border); font-size: 0.8125rem;" aria-hidden="true">|</span>
+                <a href="terms.html" class="footer-legal-link">Terms of Service</a>
+            </div>
+            <p class="footer-copyright">&copy; 2026 Halonic. Open source under the MIT License.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Apply body theme class if light mode is enabled in localStorage
+            if (localStorage.getItem('devcard_light_mode') === '1') {
+                document.body.classList.add('light-mode');
+            }
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
