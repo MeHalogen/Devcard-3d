@@ -101,6 +101,19 @@
          MAIN APP GRID
     =================================================================== -->
     <main class="app-container" id="app-main" role="main">
+        <!-- Global Promo Banner -->
+        <div class="promo-banner" id="leaderboard-promo-banner" style="display: none;">
+            <div class="promo-content">
+                <span class="promo-icon">🏆</span>
+                <p class="promo-text">
+                    <strong>Compete Globally:</strong> Only authentic GitHub metrics can join the ranking. 
+                    <button class="promo-link-btn" id="promo-signin-trigger">Sign in with GitHub</button> to lock in your rank!
+                </p>
+            </div>
+            <button class="promo-close-btn" id="promo-banner-close" aria-label="Dismiss banner">
+                <i data-lucide="x" aria-hidden="true"></i>
+            </button>
+        </div>
 
         <!-- Left: Control Panel -->
         <section class="control-panel" aria-label="Card customizer">
@@ -169,7 +182,7 @@
 
                     <div class="slider-group">
                         <div class="slider-header">
-                            <label for="stat-hp">HP (Contributions / Commits)</label>
+                            <label for="stat-hp">HP (Commit Power)</label>
                             <span class="slider-val" id="val-hp" aria-live="polite">5,000</span>
                         </div>
                         <input type="range" id="stat-hp" min="10" max="25000" step="50" value="5000" aria-label="HP stat slider">
@@ -211,7 +224,7 @@
 
                     <div class="input-field-group">
                         <label for="custom-bio">Special Power (Bio)</label>
-                        <textarea id="custom-bio" placeholder="Writes kernel modules in his sleep. Direct commands bypass compiler limitations."></textarea>
+                        <textarea id="custom-bio" placeholder="Crafting elegant solutions one commit at a time. Steady progress, solid foundations."></textarea>
                     </div>
 
                     <div class="input-field-group">
@@ -221,21 +234,26 @@
 
                     <div class="language-pickers">
                         <div class="input-field-group">
-                            <label for="primary-lang">Primary Affinity</label>
+                            <label for="primary-lang">Primary Language</label>
                             <select id="primary-lang" aria-label="Primary language">
-                                <option value="js">JavaScript (Lightning)</option>
-                                <option value="ts">TypeScript (Cyber)</option>
-                                <option value="py">Python (Nature)</option>
-                                <option value="rs">Rust (Iron)</option>
-                                <option value="go">Go (Sky)</option>
-                                <option value="cpp">C++ (Fire)</option>
-                                <option value="html">HTML/CSS (Illusion)</option>
-                                <option value="rb">Ruby (Heart)</option>
-                                <option value="java">Java (Earth)</option>
+                                <option value="js">JavaScript</option>
+                                <option value="ts">TypeScript</option>
+                                <option value="py">Python</option>
+                                <option value="rs">Rust</option>
+                                <option value="go">Go</option>
+                                <option value="cpp">C++</option>
+                                <option value="c">C</option>
+                                <option value="cs">C#</option>
+                                <option value="swift">Swift</option>
+                                <option value="kotlin">Kotlin</option>
+                                <option value="php">PHP</option>
+                                <option value="html">HTML/CSS</option>
+                                <option value="rb">Ruby</option>
+                                <option value="java">Java</option>
                             </select>
                         </div>
                         <div class="input-field-group">
-                            <label for="secondary-lang">Secondary Affinity</label>
+                            <label for="secondary-lang">Secondary Language</label>
                             <select id="secondary-lang" aria-label="Secondary language">
                                 <option value="ts">TypeScript</option>
                                 <option value="js">JavaScript</option>
@@ -243,6 +261,11 @@
                                 <option value="rs">Rust</option>
                                 <option value="go">Go</option>
                                 <option value="cpp">C++</option>
+                                <option value="c">C</option>
+                                <option value="cs">C#</option>
+                                <option value="swift">Swift</option>
+                                <option value="kotlin">Kotlin</option>
+                                <option value="php">PHP</option>
                                 <option value="html">HTML/CSS</option>
                                 <option value="rb">Ruby</option>
                                 <option value="java">Java</option>
@@ -279,7 +302,12 @@
                                     <span class="quest-badge" id="card-quest-badge" style="display:none">LFG</span>
                                 </div>
                                 <a href="https://github.com/torvalds" target="_blank" rel="noopener noreferrer" class="card-username-link" id="card-display-name-link">
-                                    <h3 class="card-username" id="card-display-name">torvalds</h3>
+                                    <div class="card-username-wrapper">
+                                        <h3 class="card-username" id="card-display-name">torvalds</h3>
+                                        <span id="card-verified-check" class="verified-check-tick" title="Verified Dev" style="display:none">
+                                            <i data-lucide="badge-check" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
                                 </a>
                                 <span class="guild-title" id="card-guild-title">Guild: Freelance Alliance</span>
                                 <span class="established-year" id="card-established-year">EST. 2020</span>
@@ -293,12 +321,6 @@
                         <!-- Portrait Frame -->
                         <div class="card-portrait-container">
                             <div class="portrait-mesh" aria-hidden="true"></div>
-
-                            <!-- Verification Badge -->
-                            <div class="card-verified-badge creative" id="card-verified-badge" aria-live="polite">
-                                <span class="badge-icon-wrapper" id="badge-icon-wrapper"><i data-lucide="pencil" aria-hidden="true"></i></span>
-                                <span id="verified-badge-text">Creative Mode</span>
-                            </div>
 
                             <img src="https://avatars.githubusercontent.com/u/1024?v=4"
                                  alt="Developer avatar"
@@ -319,7 +341,7 @@
                         <!-- Bio Block -->
                         <div class="card-bio-block">
                             <p class="bio-text" id="card-display-bio">
-                                Writes kernel modules in his sleep. Direct commands bypass compiler limitations.
+                                Building magical developer experiences at Halonic. Shipping products at lightning speed.
                             </p>
                         </div>
 
@@ -328,7 +350,7 @@
                             <div class="card-stat-node" role="listitem">
                                 <span class="stat-icon"><i data-lucide="heart" aria-hidden="true"></i></span>
                                 <div class="stat-meta">
-                                    <span class="stat-label">HP (Commits)</span>
+                                    <span class="stat-label">HP (Commit Power)</span>
                                     <span class="stat-value" id="card-display-hp">14,242</span>
                                 </div>
                             </div>
@@ -373,14 +395,40 @@
                 </button>
             </div>
         </section>
+
+        <!-- Right Column: Standalone Global Leaderboard -->
+        <section class="leaderboard-container" aria-label="Global developer leaderboard">
+            <div class="leaderboard-header">
+                <div class="leaderboard-header-text">
+                    <h4>Global Developer Leaderboard</h4>
+                    <p>Rankings are based on verified GitHub stats only. Sign in and generate your card to claim your rank.</p>
+                </div>
+                <button class="btn-join-leaderboard" id="btn-join-leaderboard" aria-label="Join the developer leaderboard">
+                    <i data-lucide="trophy" aria-hidden="true"></i>
+                    <span id="join-lb-label">Join Leaderboard</span>
+                </button>
+            </div>
+
+            <!-- Shown when user is in unverified / creative mode -->
+            <div class="leaderboard-unverified-notice" id="lb-unverified-notice" style="display:none" aria-live="polite">
+                <span class="notice-icon">🎨</span>
+                <h5>You're in Creative Mode</h5>
+                <p>Your card's stats have been manually adjusted. Only cards with <strong>Verified GitHub metrics</strong> can compete on the leaderboard. Fetch your real stats or sign in with GitHub to restore your ranking.</p>
+            </div>
+
+            <!-- The ranked list -->
+            <div class="leaderboard-list" id="leaderboard-list" role="list" aria-label="Developer rankings">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
     </main>
 
-       <!-- ===================================================================
-         EXPORTER & SHARE / LEADERBOARD SIDE-BY-SIDE HUB
+    <!-- ===================================================================
+         EXPORTER & SHARE HUB
     =================================================================== -->
-    <section class="exporter-tabs-section" aria-label="Share, embed, and leaderboard panel">
-        <div class="exporter-grid">
-            <!-- Left Column: Exporter & Share Tabs -->
+    <section class="exporter-tabs-section" aria-label="Share and embed panel">
+        <div class="exporter-container-single">
+            <!-- Centered Exporter & Share Tabs -->
             <div class="exporter-container">
                 <div class="tabs-header" role="tablist" aria-label="Export options">
                     <button class="tab-trigger active" data-tab="tab-embed" role="tab" aria-selected="true" aria-controls="tab-embed" id="trigger-embed">
@@ -443,32 +491,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Right Column: Standalone Global Leaderboard -->
-            <div class="leaderboard-container">
-                <div class="leaderboard-header">
-                    <div class="leaderboard-header-text">
-                        <h4>Global Developer Leaderboard</h4>
-                        <p>Rankings are based on verified GitHub stats only. Sign in and generate your card to claim your rank.</p>
-                    </div>
-                    <button class="btn-join-leaderboard" id="btn-join-leaderboard" aria-label="Join the developer leaderboard">
-                        <i data-lucide="trophy" aria-hidden="true"></i>
-                        <span id="join-lb-label">Join Leaderboard</span>
-                    </button>
-                </div>
-
-                <!-- Shown when user is in unverified / creative mode -->
-                <div class="leaderboard-unverified-notice" id="lb-unverified-notice" style="display:none" aria-live="polite">
-                    <span class="notice-icon">🎨</span>
-                    <h5>You're in Creative Mode</h5>
-                    <p>Your card's stats have been manually adjusted. Only cards with <strong>Verified GitHub metrics</strong> can compete on the leaderboard. Fetch your real stats or sign in with GitHub to restore your ranking.</p>
-                </div>
-
-                <!-- The ranked list -->
-                <div class="leaderboard-list" id="leaderboard-list" role="list" aria-label="Developer rankings">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </div>
         </div>
     </section>
 
@@ -502,6 +524,19 @@
     <div class="particles-container" aria-hidden="true">
         <canvas id="canvas-particles"></canvas>
     </div>
+
+    <!-- ===================================================================
+         GLOBAL PAGE FOOTER
+    =================================================================== -->
+    <footer class="global-footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-attribution">
+                <i data-lucide="layers" class="footer-logo-icon" aria-hidden="true"></i>
+                <span>A project by <strong class="footer-halonic-text">Halonic</strong>. Crafted with magic and verified GitHub statistics.</span>
+            </div>
+            <p class="footer-copyright">&copy; 2026 Halonic. Open source under the MIT License.</p>
+        </div>
+    </footer>
 
     <!-- Toast Notification -->
     <div class="toast" id="toast-notify" role="alert" aria-live="assertive" aria-atomic="true">

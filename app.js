@@ -53,17 +53,22 @@ document.addEventListener('DOMContentLoaded', () => {
         hireable:      true,
     };
 
-    // ---- Language to Element Map ----
+    // ---- Language configuration ----
     const elements = {
-        js:   { emoji: '⚡', name: 'Lightning', color: '#f7df1e', title: 'Lightning Evoker' },
-        ts:   { emoji: '🛡️', name: 'Cyber',    color: '#3178c6', title: 'Cyber Paladin' },
-        py:   { emoji: '🐍', name: 'Nature',   color: '#3776ab', title: 'Nature Druid' },
-        rs:   { emoji: '⚙️', name: 'Iron',     color: '#c85d1e', title: 'Iron Warlock' },
-        go:   { emoji: '💨', name: 'Sky',      color: '#00add8', title: 'Sky Daemon' },
-        cpp:  { emoji: '🔥', name: 'Fire',     color: '#f34b7d', title: 'Fire Conjurer' },
-        html: { emoji: '✨', name: 'Illusion', color: '#e34c26', title: 'Illusionist Master' },
-        rb:   { emoji: '💎', name: 'Heart',    color: '#701516', title: 'Heart Enchanter' },
-        java: { emoji: '🏔️', name: 'Earth',   color: '#b07219', title: 'Enterprise Golem' },
+        js:   { emoji: '⚡', name: 'JavaScript', color: '#f7df1e', title: 'JS Wizard' },
+        ts:   { emoji: '🛡️', name: 'TypeScript', color: '#3178c6', title: 'TS Paladin' },
+        py:   { emoji: '🐍', name: 'Python',     color: '#3776ab', title: 'Python Guru' },
+        rs:   { emoji: '⚙️', name: 'Rust',       color: '#c85d1e', title: 'Rust Master' },
+        go:   { emoji: '💨', name: 'Go',         color: '#00add8', title: 'Go Champion' },
+        cpp:  { emoji: '🔥', name: 'C++',        color: '#f34b7d', title: 'C++ Knight' },
+        c:    { emoji: '🔌', name: 'C',          color: '#a8b9cc', title: 'C Specialist' },
+        cs:   { emoji: '🎯', name: 'C#',         color: '#178600', title: 'C# Expert' },
+        swift: { emoji: '🐦', name: 'Swift',     color: '#f05138', title: 'Swift Dev' },
+        kotlin: { emoji: '📱', name: 'Kotlin',   color: '#7f52ff', title: 'Kotlin Ranger' },
+        php:  { emoji: '🐘', name: 'PHP',        color: '#777bb4', title: 'PHP Sorcerer' },
+        html: { emoji: '✨', name: 'HTML/CSS',   color: '#e34c26', title: 'UI Architect' },
+        rb:   { emoji: '💎', name: 'Ruby',       color: '#701516', title: 'Ruby Mage' },
+        java: { emoji: '🏔️', name: 'Java',       color: '#b07219', title: 'Java Veteran' },
     };
 
 
@@ -103,8 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
         cardDisplayDef:       document.getElementById('card-display-def'),
         affinity1:            document.getElementById('affinity-1'),
         affinity2:            document.getElementById('affinity-2'),
-        cardVerifiedBadge:    document.getElementById('card-verified-badge'),
-        verifiedBadgeText:    document.getElementById('verified-badge-text'),
         btnDownload:          document.getElementById('btn-download'),
         btnFlip:              document.getElementById('btn-flip'),
         quickFillButtons:     document.querySelectorAll('.btn-quick-fill'),
@@ -319,13 +322,50 @@ document.addEventListener('DOMContentLoaded', () => {
         return n.toLocaleString();
     };
 
-    const getDeveloperClass = (primaryLang) => {
-        const lang = (primaryLang || 'js').toLowerCase();
-        if (lang === 'rs' || lang === 'cpp') return 'Systems Chronomancer';
-        if (lang === 'js' || lang === 'ts' || lang === 'html') return 'Frontend Spellweaver';
-        if (lang === 'go' || lang === 'java' || lang === 'rb') return 'Backend Golem';
-        if (lang === 'py') return 'Data Druid';
-        return 'Compiler Squire';
+    const getDeveloperClass = (primaryLang, secondaryLang) => {
+        const pLang = (primaryLang || 'js').toLowerCase();
+        const sLang = (secondaryLang || (state && state.secondaryLang) || 'ts').toLowerCase();
+        
+        const frontendLangs = ['js', 'ts', 'html', 'css', 'swift', 'kotlin'];
+        const backendLangs = ['go', 'java', 'py', 'rb', 'php', 'cpp', 'rs'];
+        
+        const isPFront = frontendLangs.includes(pLang);
+        const isSFront = frontendLangs.includes(sLang);
+        const isPBack = backendLangs.includes(pLang);
+        const isSBack = backendLangs.includes(sLang);
+        
+        // Full stack: Primary is frontend and secondary is backend, or vice versa
+        if ((isPFront && isSBack) || (isPBack && isSFront)) {
+            const fullStackClasses = [
+                'Full-Stack Alchemist',
+                'Systems Architect',
+                'Cyber Gladiator',
+                'Full-Stack Archmage'
+            ];
+            const idx = (pLang.length + sLang.length) % fullStackClasses.length;
+            return fullStackClasses[idx];
+        } else if (isPFront) {
+            const frontClasses = {
+                'js': 'Frontend Spellweaver',
+                'ts': 'Type Chronomancer',
+                'html': 'DOM Paladin',
+                'css': 'CSS Illusionist',
+                'swift': 'iOS Ranger',
+                'kotlin': 'Android Druid'
+            };
+            return frontClasses[pLang] || 'Frontend Spellweaver';
+        } else {
+            const backClasses = {
+                'go': 'Goroutine Summoner',
+                'java': 'Enterprise Fortress Knight',
+                'py': 'Data Druid',
+                'rb': 'Ruby Warlock',
+                'php': 'Server Necromancer',
+                'cpp': 'Systems Gladiator',
+                'rs': 'Borrow Checker Ranger'
+            };
+            return backClasses[pLang] || 'Backend Sorcerer';
+        }
     };
 
     // ========================================================================
@@ -335,15 +375,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const getPassiveAbility = (primaryLang, state) => {
         const lang = (primaryLang || 'js').toLowerCase();
         
-        // Language-specific base abilities
+        // Language-specific action-focused abilities
         const abilities = {
             'rs': {
-                name: 'Memory Mastery',
-                desc: 'Zero-cost abstractions dominate the battlefield. Immune to memory leaks.'
+                name: 'Borrow Checker',
+                desc: 'Compile-time ownership validation. Complete protection against memory corruption.'
             },
             'cpp': {
-                name: 'Raw Power',
-                desc: 'Direct hardware control. Critical hits deal 2× damage and pierce armor.'
+                name: 'Memory Mastery',
+                desc: 'Direct hardware control. Critical hits deal 2x damage and ignore armor.'
             },
             'js': {
                 name: 'Async Sorcery',
@@ -351,27 +391,27 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             'ts': {
                 name: 'Type Guardian',
-                desc: 'Compile-time shields prevent runtime disasters. DEF +25%.'
+                desc: 'Compile-time shields block all runtime errors. DEF +25%.'
             },
             'py': {
-                name: 'Zen Flow',
-                desc: 'Elegant simplicity heals wounds. Regenerate 15% HP every turn.'
+                name: 'Zen Meditation',
+                desc: 'Clean code heals wounds. Regenerate 15% HP every turn.'
             },
             'go': {
                 name: 'Goroutine Swarm',
-                desc: 'Deploy 10,000 lightweight warriors. Attack speed +30%.'
+                desc: 'Summon 10,000 lightweight minions. Attack speed +30%.'
             },
             'java': {
-                name: 'Enterprise Fortress',
-                desc: 'Layered abstractions form impenetrable walls. Damage reduction +25%.'
+                name: 'Factory Pattern',
+                desc: 'Build impenetrable defense layers. Damage reduction +25%.'
             },
             'rb': {
-                name: 'Ruby Magic',
-                desc: 'Metaprogramming rewrites reality. Charisma +20%, dodge +15%.'
+                name: 'Metaprogramming Magic',
+                desc: 'Rewrite reality on the fly. Charisma +20%, dodge chance +15%.'
             },
             'html': {
                 name: 'Flexbox Mastery',
-                desc: 'Perfect positioning every time. Reorganize the battlefield at will.'
+                desc: 'Instantly reorganize the battlefield. Perfect positioning every time.'
             },
             'css': {
                 name: 'Style Cascade',
@@ -393,64 +433,58 @@ document.addEventListener('DOMContentLoaded', () => {
         
         return abilities[lang] || {
             name: 'Clean Execution',
-            desc: 'Reliable and balanced. No weaknesses, predictable power.'
+            desc: 'Reliable and balanced. No weaknesses, no surprises.'
         };
     };
 
-    const getDynamicBio = (state) => {
+    const getDynamicBio = (state, forceRecalculate = false) => {
         const { hp, atk, def, lvl, bio } = state;
         
-        // If user has custom bio, use it
-        if (bio && bio !== 'This mysterious developer lets their code speak for itself.') {
+        // If user has custom bio and we are not forcing a fresh recalculation, use it
+        if (!forceRecalculate && bio && bio !== 'This mysterious developer lets their code speak for itself.') {
             return bio;
         }
         
-        // Generate dynamic bio based on stats
-        const totalStats = hp + atk + def;
-        const isVeteran = lvl >= 10;
-        const isInfluencer = def >= 10000;
-        const isProlific = hp >= 50;
-        const isActive = atk >= 100;
-        
-        // High-tier bios (exceptional devs)
-        if (totalStats > 300000) {
-            return 'Legendary architect whose code shapes the industry. Repositories echo across the dev world.';
-        }
-        if (isInfluencer && isProlific) {
-            return 'Prolific builder with massive reach. Inspires thousands with every commit.';
-        }
-        if (isVeteran && isProlific && isActive) {
-            return 'Battle-tested veteran. Has weathered framework wars and emerged victorious.';
+        // Empty Profile check
+        if (atk === 0 && hp === 0 && def === 0) {
+            return 'An observer of the digital realm. Their GitHub profile is a clean slate waiting for their first masterpiece.';
         }
         
-        // Mid-tier bios (solid devs)
-        if (isInfluencer) {
-            return 'Developer with serious influence. Their opinions move communities.';
+        // Famous Developer Easter Egg Bios (Witty, Premium, and Wording-Safe)
+        const userLower = (state.username || '').toLowerCase();
+        if (userLower === 'torvalds') {
+            return 'The legendary architect of Linux and Git. Writes operating system kernels in his sleep and commands raw hardware directly.';
         }
-        if (isProlific && isActive) {
-            return 'Ships code faster than most can write documentation. Unstoppable momentum.';
+        if (userLower === 'gaearon') {
+            return 'Legendary React sorcerer who taught the world how to manage application state. Sculptor of virtual DOMs.';
         }
-        if (isVeteran && isActive) {
-            return 'Seasoned pro who\'s seen it all. Commits with surgical precision.';
+        if (userLower === 'yyx990803') {
+            return 'The Grand Architect of Vue and Vite. Engineered a high-speed frontend ecosystem with absolute technical precision.';
         }
-        if (isProlific) {
-            return 'Prolific creator. Builds projects like others write tweets.';
-        }
-        if (isActive) {
-            return 'High-velocity coder. Commits flow like a river in spring.';
+        if (userLower === 'mehalogen') {
+            return 'Visionary founder of Halonic. Crafts magical developer experiences and ships complex products at lightning speeds.';
         }
         
-        // New/rising devs
+        // Dynamic, humor-rich bios based on stats and ratios
+        const ratio = atk > 0 ? (hp / atk) : hp;
+        
+        if (def >= 10000) {
+            return 'Developer with massive influence. Their repositories inspire thousands and direct the flow of open-source.';
+        }
+        if (atk >= 80) {
+            return 'A prolific builder who ships projects faster than most people can write a single commit.';
+        }
+        if (lvl >= 10) {
+            return 'Battle-tested veteran. Has weathered framework wars and still writes vanilla JS.';
+        }
         if (lvl <= 2) {
-            return 'Rising star in the dev world. Fresh perspective, hungry energy.';
+            return 'Rising star in the dev world. Fresh perspective, rapid momentum, and infinite potential.';
         }
-        if (lvl <= 5) {
-            return 'Building momentum. Each project sharpens their edge.';
+        if (ratio >= 500) {
+            return 'Hyper-focused engineer. Polishes their code to absolute perfection with hundreds of commits per project.';
         }
-        
-        // Default tiers
-        if (isVeteran) {
-            return 'Experienced developer. Calm under pressure, reliable under fire.';
+        if (atk > 20 && ratio < 50) {
+            return 'Chaotic builder who spawns repositories like tweets. Code first, questions never.';
         }
         
         return 'Crafting elegant solutions one commit at a time. Steady progress, solid foundations.';
@@ -466,14 +500,22 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const getDevRarity = (followers, repos, primaryLang = 'js') => {
-        const score = followers * 5 + repos * 2;
+        const defVal = typeof followers === 'number' ? followers : state.def;
+        const atkVal = typeof repos === 'number' ? repos : state.atk;
+        const hpVal = state ? state.hp : 5000;
+        const lvlVal = state ? state.lvl : 8;
+        const secondaryLang = state ? state.secondaryLang : 'ts';
+        
+        // Mathematically justified composite score for dynamic tiers
+        const score = Math.round((hpVal / 10) + (atkVal * 12) + (defVal * 3) + (lvlVal * 25));
+        
         let prefix = 'Common';
-        if (score >= 10000) prefix = 'Mythic';
-        else if (score >= 2500)  prefix = 'Legendary';
-        else if (score >= 700)   prefix = 'Epic';
-        else if (score >= 150)   prefix = 'Rare';
-        else if (score >= 30)    prefix = 'Uncommon';
-        return `${prefix} ${getDeveloperClass(primaryLang)}`;
+        if (score >= 12000) prefix = 'Legendary';
+        else if (score >= 4000)  prefix = 'Epic';
+        else if (score >= 1200)  prefix = 'Rare';
+        else if (score >= 300)   prefix = 'Uncommon';
+        
+        return `${prefix} ${getDeveloperClass(primaryLang, secondaryLang)}`;
     };
 
     /** Dev score formula for leaderboard ranking */
@@ -484,20 +526,14 @@ document.addEventListener('DOMContentLoaded', () => {
        VERIFICATION BADGE
        ======================================================================== */
     function updateVerifiedBadge() {
-        const badge = dom.cardVerifiedBadge;
-        const txt   = dom.verifiedBadgeText;
+        const checkIcon = document.getElementById('card-verified-check');
         const backVerified = document.getElementById('back-stat-verified');
-        const iconWrapper = document.getElementById('badge-icon-wrapper');
 
         if (state.isVerified) {
-            badge.className = 'card-verified-badge verified';
-            if (iconWrapper) iconWrapper.innerHTML = '<i data-lucide="badge-check" aria-hidden="true"></i>';
-            txt.textContent = 'Verified Dev';
+            if (checkIcon) checkIcon.style.display = 'inline-flex';
             if (backVerified) backVerified.textContent = 'YES ✓';
         } else {
-            badge.className = 'card-verified-badge creative';
-            if (iconWrapper) iconWrapper.innerHTML = '<i data-lucide="pencil" aria-hidden="true"></i>';
-            txt.textContent = 'Creative Mode';
+            if (checkIcon) checkIcon.style.display = 'none';
             if (backVerified) backVerified.textContent = 'NO';
         }
         lucide.createIcons();
@@ -724,10 +760,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const val = parseInt(e.target.value, 10);
             valNode.textContent = fmt(val);
             state[stateProp] = val;
-            if (stateProp === 'def' || stateProp === 'atk') {
-                state.rarity = getDevRarity(state.def, state.atk, state.primaryLang);
-                dom.customTitle.value = state.rarity;
-            }
+            // Update rarity on any core stat change since score is now composite
+            state.rarity = getDevRarity(state.def, state.atk, state.primaryLang);
+            dom.customTitle.value = state.rarity;
             revokeVerification(); // Manually edited → revoke verified status
             updateCardGraphics();
         });
@@ -761,6 +796,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     dom.secondaryLangSelect.addEventListener('change', (e) => {
         state.secondaryLang = e.target.value;
+        // Recalculate rarity since class contains secondary lang stack logic now
+        state.rarity = getDevRarity(state.def, state.atk, state.primaryLang);
+        dom.customTitle.value = state.rarity;
         updateCardGraphics();
     });
 
@@ -837,21 +875,41 @@ document.addEventListener('DOMContentLoaded', () => {
                     const count = {};
                     repos.forEach(r => { if (r.language) { const l = r.language.toLowerCase(); count[l] = (count[l] || 0) + 1; } });
                     const sorted = Object.keys(count).sort((a, b) => count[b] - count[a]);
-                    const map = { javascript: 'js', typescript: 'ts', python: 'py', rust: 'rs', go: 'go', 'c++': 'cpp', html: 'html', css: 'html', ruby: 'rb', java: 'java' };
+                    const map = { 
+                        javascript: 'js', 
+                        typescript: 'ts', 
+                        python: 'py', 
+                        rust: 'rs', 
+                        go: 'go', 
+                        'c++': 'cpp', 
+                        c: 'c', 
+                        'c#': 'cs', 
+                        swift: 'swift', 
+                        kotlin: 'kotlin', 
+                        php: 'php', 
+                        html: 'html', 
+                        css: 'html', 
+                        ruby: 'rb', 
+                        java: 'java' 
+                    };
                     const matched = sorted.map(l => map[l]).filter(Boolean);
                     if (matched[0]) topLangs[0] = matched[0];
                     if (matched[1]) topLangs[1] = matched[1];
                 }
             } catch (_) {}
 
-            const hp  = Math.min(25000, (userData.public_repos * 32) + (userData.followers * 3) + 1500);
+            const reposCount = userData.public_repos || 0;
+            const followersCount = userData.followers || 0;
+            const hp = reposCount > 0 
+                ? Math.min(25000, (reposCount * 32) + (followersCount * 3) + 200) 
+                : 0;
             const lvl = Math.max(1, new Date().getFullYear() - new Date(userData.created_at).getFullYear() + 1);
 
             state.username     = userData.login;
             state.name         = userData.name || userData.login;
             state.avatarUrl    = userData.avatar_url;
-            state.atk          = userData.public_repos || 1;
-            state.def          = userData.followers    || 0;
+            state.atk          = reposCount;
+            state.def          = followersCount;
             state.hp           = hp;
             state.lvl          = Math.min(99, lvl);
             state.primaryLang  = topLangs[0] || 'js';
@@ -859,7 +917,7 @@ document.addEventListener('DOMContentLoaded', () => {
             state.rarity       = getDevRarity(state.def, state.atk, state.primaryLang);
             
             // Generate dynamic bio based on stats (after all stats are set)
-            state.bio          = userData.bio || getDynamicBio(state);
+            state.bio          = userData.bio || getDynamicBio(state, true);
             state.isVerified   = true;   // ✅ Fresh from API — verified!
             state.createdAt    = userData.created_at || new Date().toISOString();
             state.company      = userData.company || '';
@@ -967,6 +1025,10 @@ document.addEventListener('DOMContentLoaded', () => {
         dom.userAvatarSm.src                = user.avatarUrl || `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(user.login || 'user')}`;
         dom.userChipName.textContent        = user.name || user.login;
         dom.joinLbLabel.textContent         = state.isOnLeaderboard ? 'On Leaderboard ✓' : 'Join Leaderboard';
+        
+        // Hide promo banner on login
+        const promoBanner = document.getElementById('leaderboard-promo-banner');
+        if (promoBanner) promoBanner.style.display = 'none';
     }
 
     function clearAuthUI() {
@@ -977,6 +1039,12 @@ document.addEventListener('DOMContentLoaded', () => {
         dom.userProfileChip.classList.remove('visible');
         updateVerifiedBadge();
         renderLeaderboard();
+
+        // Show promo banner if not dismissed
+        const promoBanner = document.getElementById('leaderboard-promo-banner');
+        if (promoBanner && localStorage.getItem('devcard_promo_dismissed') !== '1') {
+            promoBanner.style.display = 'flex';
+        }
     }
 
     // Resolve active Supabase session on load
@@ -1360,6 +1428,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     setInterval(updateSocialShares, 1500);
+
+    /* ========================================================================
+       PROMO BANNER CONTROLLER
+       ======================================================================== */
+    const promoBanner = document.getElementById('leaderboard-promo-banner');
+    const promoClose = document.getElementById('promo-banner-close');
+    const promoSignin = document.getElementById('promo-signin-trigger');
+
+    if (promoBanner) {
+        // Initialize promo visibility on startup
+        const isDismissed = localStorage.getItem('devcard_promo_dismissed') === '1';
+        if (!isDismissed && !state.authUser) {
+            promoBanner.style.display = 'flex';
+        }
+
+        if (promoClose) {
+            promoClose.addEventListener('click', () => {
+                promoBanner.style.transform = 'translateY(-10px)';
+                promoBanner.style.opacity = '0';
+                setTimeout(() => {
+                    promoBanner.style.display = 'none';
+                }, 300);
+                localStorage.setItem('devcard_promo_dismissed', '1');
+            });
+        }
+
+        if (promoSignin) {
+            promoSignin.addEventListener('click', () => {
+                signInWithGitHub();
+            });
+        }
+    }
 
     /* ========================================================================
        BOOT SEQUENCE
