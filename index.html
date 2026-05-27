@@ -10,21 +10,21 @@
     <meta name="description" content="Generate a stunning holographic 3D developer trading card from your GitHub profile. Compete on the global leaderboard, share your stats, and embed on your portfolio.">
     <meta name="keywords" content="developer card, github stats card, 3D dev card, holographic developer card, github profile card, programmer trading card, leaderboard">
     <meta name="author" content="DevCard 3D">
-    <link rel="canonical" href="https://devcard3d.vercel.app">
+    <link rel="canonical" href="https://devcard-3d.vercel.app">
 
     <!-- Open Graph / Social Preview -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://devcard3d.vercel.app">
+    <meta property="og:url" content="https://devcard-3d.vercel.app">
     <meta property="og:title" content="DevCard 3D — Your Holographic Developer Trading Card">
     <meta property="og:description" content="Turn your GitHub stats into a stunning 3D holographic trading card. Sign in to claim your rank on the global developer leaderboard.">
-    <meta property="og:image" content="https://devcard3d.vercel.app/og-preview.png">
+    <meta property="og:image" content="https://devcard-3d.vercel.app/og-preview.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://devcard3d.vercel.app">
+    <meta name="twitter:url" content="https://devcard-3d.vercel.app">
     <meta name="twitter:title" content="DevCard 3D — Holographic Developer Trading Cards">
     <meta name="twitter:description" content="Generate your 3D holographic developer trading card. Sign in with GitHub and battle for a spot on the global leaderboard.">
-    <meta name="twitter:image" content="https://devcard3d.vercel.app/og-preview.png">
+    <meta name="twitter:image" content="https://devcard-3d.vercel.app/og-preview.png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -426,6 +426,13 @@
                 <span class="notice-icon">🎨</span>
                 <h5>You're in Creative Mode</h5>
                 <p>Your card's stats have been manually adjusted. Only cards with <strong>Verified GitHub metrics</strong> can compete on the leaderboard. Fetch your real stats or sign in with GitHub to restore your ranking.</p>
+            </div>
+
+            <!-- Shown when logged-in verified user is NOT on the leaderboard yet -->
+            <div class="leaderboard-not-joined-notice" id="lb-not-joined-notice" style="display:none" aria-live="polite">
+                <span class="notice-icon">🏆</span>
+                <h5>Claim Your Spot Forever</h5>
+                <p>Your verified DevCard is not registered on the global leaderboard database yet. Click <strong>Join Leaderboard</strong> above to claim your permanent rank and showcase your stats globally.</p>
             </div>
 
             <!-- The ranked list -->

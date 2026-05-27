@@ -133,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ddSignOut:            document.getElementById('dd-sign-out'),
         leaderboardList:      document.getElementById('leaderboard-list'),
         lbUnverifiedNotice:   document.getElementById('lb-unverified-notice'),
+        lbNotJoinedNotice:    document.getElementById('lb-not-joined-notice'),
         btnJoinLeaderboard:   document.getElementById('btn-join-leaderboard'),
         joinLbLabel:          document.getElementById('join-lb-label'),
         consentModal:         document.getElementById('consent-modal'),
@@ -658,7 +659,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateCodeBlocks() {
         const base = (window.location.origin && window.location.origin !== 'null')
             ? window.location.origin
-            : 'https://devcard3d.vercel.app';
+            : 'https://devcard-3d.vercel.app';
 
         const params = new URLSearchParams({
             user:    state.username,
@@ -1037,6 +1038,12 @@ document.addEventListener('DOMContentLoaded', () => {
         state.isOnLeaderboard = false;
         dom.btnGithubLogin.style.display = '';
         dom.userProfileChip.classList.remove('visible');
+        if (dom.btnJoinLeaderboard) {
+            dom.btnJoinLeaderboard.classList.remove('is-on-leaderboard');
+        }
+        if (dom.joinLbLabel) {
+            dom.joinLbLabel.textContent = 'Join Leaderboard';
+        }
         updateVerifiedBadge();
         renderLeaderboard();
 
@@ -1062,6 +1069,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (err) {
             console.warn('Session resolve error:', err);
+        } finally {
+            // Clean up the URL hash if it contains auth tokens to prevent accidental exposure
+            if (window.location.hash && (window.location.hash.includes('access_token=') || window.location.hash.includes('error='))) {
+                history.replaceState(null, document.title, window.location.pathname + window.location.search);
+            }
         }
     }
 
@@ -1118,12 +1130,25 @@ document.addEventListener('DOMContentLoaded', () => {
             if (dom.joinLbLabel) {
                 dom.joinLbLabel.textContent = state.isOnLeaderboard ? 'On Leaderboard ✓' : 'Join Leaderboard';
             }
+            if (dom.btnJoinLeaderboard) {
+                dom.btnJoinLeaderboard.classList.toggle('is-on-leaderboard', state.isOnLeaderboard);
+            }
+            // Trigger a re-render to toggle any status-based notification banners
+            renderLeaderboard();
         } catch (_) {}
     }
 
     async function registerOnLeaderboard() {
+        if (!state.authUser) {
+            showToast('Sign in with GitHub first to join the leaderboard.', true);
+            return;
+        }
         if (!state.isVerified) {
             showToast('Only verified stats can join the leaderboard.', true);
+            return;
+        }
+        if (state.authUser.login.toLowerCase() !== state.username.toLowerCase()) {
+            showToast(`You can only register your own card. Please generate a card for @${state.authUser.login} first.`, true);
             return;
         }
 
@@ -1157,6 +1182,9 @@ document.addEventListener('DOMContentLoaded', () => {
         saveLocalLeaderboardEntry(entry);
         state.isOnLeaderboard = true;
         dom.joinLbLabel.textContent = 'On Leaderboard ✓';
+        if (dom.btnJoinLeaderboard) {
+            dom.btnJoinLeaderboard.classList.add('is-on-leaderboard');
+        }
         showToast('🏆 You\'ve been registered on the leaderboard!');
         renderLeaderboard();
     }
@@ -1198,6 +1226,12 @@ document.addEventListener('DOMContentLoaded', () => {
             dom.lbUnverifiedNotice.style.display = (!state.isVerified && state.authUser) ? '' : 'none';
         }
 
+        // Show not-joined notice if user is logged in, has verified card stats, but is not on the leaderboard yet
+        if (dom.lbNotJoinedNotice) {
+            const shouldShow = (state.authUser && state.isVerified && !state.isOnLeaderboard);
+            dom.lbNotJoinedNotice.style.display = shouldShow ? 'flex' : 'none';
+        }
+
         // Gather all entries: benchmarks + DB/local entries
         const localEntries = loadLocalLeaderboardEntries();
         const dbEntries    = await fetchLeaderboardFromSupabase();
@@ -1206,20 +1240,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const merged = {};
         localEntries.forEach(e  => { merged[e.username] = { ...e, score: calcScore(e) }; });
         dbEntries.forEach(e     => { merged[e.username] = { ...e, score: calcScore(e) }; });
-
-        // Add current user's verified card if applicable (even if not registered)
-        if (state.isVerified && state.username) {
-            merged[state.username] = {
-                username:   state.username,
-                name:       state.name,
-                avatarUrl:  state.avatarUrl,
-                avatar_url: state.avatarUrl,
-                score:      calcScore(state),
-                hp: state.hp, atk: state.atk, def: state.def, lvl: state.lvl,
-                verified:   true,
-                isCurrentUser: true,
-            };
-        }
 
         // Sort by score descending
         const ranked = Object.values(merged).sort((a, b) => b.score - a.score);
@@ -1317,13 +1337,16 @@ document.addEventListener('DOMContentLoaded', () => {
        CONSENT MODAL
        ======================================================================== */
     function openConsentModal() {
-        if (!state.authUser && !supabase) {
-            // Not logged in at all — prompt login first
+        if (!state.authUser) {
             showToast('Sign in with GitHub first to join the leaderboard.', true);
             return;
         }
         if (!state.isVerified) {
             showToast('Your card must be in Verified mode to join the leaderboard.', true);
+            return;
+        }
+        if (state.authUser.login.toLowerCase() !== state.username.toLowerCase()) {
+            showToast(`You can only register your own card. Please generate a card for @${state.authUser.login} first.`, true);
             return;
         }
         dom.consentModal.classList.add('open');
