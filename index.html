@@ -435,6 +435,16 @@
                 <p>Your verified DevCard is not registered on the global leaderboard database yet. Click <strong>Join Leaderboard</strong> above to claim your permanent rank and showcase your stats globally.</p>
             </div>
 
+            <!-- Shown when user is NOT logged in at all -->
+            <div class="leaderboard-signin-notice" id="lb-signin-notice" style="display:none" aria-live="polite">
+                <span class="notice-icon">🐙</span>
+                <h5>Claim Your Developer Rank</h5>
+                <p>Rankings are based on verified GitHub metrics. Sign in with GitHub to lock in your score and claim your place on the global leaderboard.</p>
+                <button class="btn btn-action btn-download-main btn-signin-notice" id="btn-signin-notice-trigger">
+                    <i data-lucide="github" aria-hidden="true"></i> Sign in with GitHub
+                </button>
+            </div>
+
             <!-- The ranked list -->
             <div class="leaderboard-list" id="leaderboard-list" role="list" aria-label="Developer rankings">
                 <!-- Populated by JavaScript -->
