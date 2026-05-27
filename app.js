@@ -1232,14 +1232,15 @@ document.addEventListener('DOMContentLoaded', () => {
             dom.lbNotJoinedNotice.style.display = shouldShow ? 'flex' : 'none';
         }
 
-        // Gather all entries: benchmarks + DB/local entries
-        const localEntries = loadLocalLeaderboardEntries();
-        const dbEntries    = await fetchLeaderboardFromSupabase();
-
-        // Merge: prefer DB entries, fall back to local
+        // Gather entries: Only pull from Supabase if online (single source of truth), fall back to local storage only in simulation mode
         const merged = {};
-        localEntries.forEach(e  => { merged[e.username] = { ...e, score: calcScore(e) }; });
-        dbEntries.forEach(e     => { merged[e.username] = { ...e, score: calcScore(e) }; });
+        if (supabase) {
+            const dbEntries = await fetchLeaderboardFromSupabase();
+            dbEntries.forEach(e => { merged[e.username] = { ...e, score: calcScore(e) }; });
+        } else {
+            const localEntries = loadLocalLeaderboardEntries();
+            localEntries.forEach(e => { merged[e.username] = { ...e, score: calcScore(e) }; });
+        }
 
         // Sort by score descending
         const ranked = Object.values(merged).sort((a, b) => b.score - a.score);
