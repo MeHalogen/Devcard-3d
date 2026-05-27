@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         leaderboardList:      document.getElementById('leaderboard-list'),
         lbUnverifiedNotice:   document.getElementById('lb-unverified-notice'),
         lbNotJoinedNotice:    document.getElementById('lb-not-joined-notice'),
+        lbSigninNotice:       document.getElementById('lb-signin-notice'),
         btnJoinLeaderboard:   document.getElementById('btn-join-leaderboard'),
         joinLbLabel:          document.getElementById('join-lb-label'),
         consentModal:         document.getElementById('consent-modal'),
@@ -919,7 +920,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Generate dynamic bio based on stats (after all stats are set)
             state.bio          = userData.bio || getDynamicBio(state, true);
-            state.isVerified   = true;   // ✅ Fresh from API — verified!
+            // Verified state strictly requires the card to match the logged-in user
+            state.isVerified   = !!(state.authUser && state.authUser.login.toLowerCase() === userData.login.toLowerCase());
             state.createdAt    = userData.created_at || new Date().toISOString();
             state.company      = userData.company || '';
             state.hireable     = !!userData.hireable;
@@ -1081,6 +1083,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dom.btnGithubLogin.addEventListener('click', signInWithGitHub);
 
+    const noticeSigninBtn = document.getElementById('btn-signin-notice-trigger');
+    if (noticeSigninBtn) {
+        noticeSigninBtn.addEventListener('click', signInWithGitHub);
+    }
+
     // Profile chip dropdown toggle
     dom.userProfileChip.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -1223,13 +1230,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Show unverified notice if user is in creative mode
         if (dom.lbUnverifiedNotice) {
-            dom.lbUnverifiedNotice.style.display = (!state.isVerified && state.authUser) ? '' : 'none';
+            dom.lbUnverifiedNotice.style.display = (!state.isVerified && state.authUser) ? 'flex' : 'none';
         }
 
         // Show not-joined notice if user is logged in, has verified card stats, but is not on the leaderboard yet
         if (dom.lbNotJoinedNotice) {
             const shouldShow = (state.authUser && state.isVerified && !state.isOnLeaderboard);
             dom.lbNotJoinedNotice.style.display = shouldShow ? 'flex' : 'none';
+        }
+
+        // Show sign-in notice if user is not logged in at all
+        if (dom.lbSigninNotice) {
+            dom.lbSigninNotice.style.display = !state.authUser ? 'flex' : 'none';
         }
 
         // Gather entries: Only pull from Supabase if online (single source of truth), fall back to local storage only in simulation mode

@@ -1874,6 +1874,54 @@ body.light-mode .leaderboard-not-joined-notice h5 {
     color: #0284c7;
 }
 
+/* Leaderboard sign-in notice */
+.leaderboard-signin-notice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    padding: 1.5rem 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--panel-border);
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+}
+
+.leaderboard-signin-notice .notice-icon {
+    font-size: 2rem;
+    color: var(--text-muted);
+}
+
+.leaderboard-signin-notice h5 {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.leaderboard-signin-notice p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin: 0;
+    max-width: 420px;
+    line-height: 1.5;
+}
+
+.btn-signin-notice {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.85rem;
+    border-radius: 10px;
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+body.light-mode .leaderboard-signin-notice {
+    background: rgba(0, 0, 0, 0.02);
+}
+
 /* Style for button when user has joined leaderboard */
 .btn-join-leaderboard.is-on-leaderboard {
     background: rgba(0, 242, 150, 0.1) !important;
